@@ -39,6 +39,7 @@ export default function Home() {
     handleStartClick,
     toggleVoiceMode,
     handleSendMessage,
+    sendMessage,
   } = xRxClient({
     orchestrator_host: NEXT_PUBLIC_ORCHESTRATOR_HOST,
     orchestrator_port: NEXT_PUBLIC_ORCHESTRATOR_PORT,
@@ -99,7 +100,6 @@ export default function Home() {
 
   const sendAction = async (tool: string, parameters: any) => {
     try {
-      if (socketRef.current) {
         const payload = {
           type: 'action',
           content: {
@@ -107,10 +107,9 @@ export default function Home() {
             parameters: JSON.stringify(parameters)
           },
           modality: isVoiceMode ? 'audio' : 'text'
-        }
-        socketRef.current.send(JSON.stringify(payload));
+        } 
+        sendMessage(message);
         console.log("Action sent successfully:", payload);
-      }
     } catch (error) {
       console.error("Error sending action to backend:", error);
     }
