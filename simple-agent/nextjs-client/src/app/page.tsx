@@ -9,6 +9,8 @@ import remarkGfm from 'remark-gfm'
 import { useMicVAD } from "@ricky0123/vad-react"
 import { ScaleLoader, SyncLoader, HashLoader, PulseLoader } from "react-spinners";
 
+import xRxClient from "react-xrx-client-lib";
+
 declare global {
   interface Window {
     webkitAudioContext: typeof AudioContext;
@@ -23,34 +25,35 @@ const NEXT_PUBLIC_UI_DEBUG_MODE = process.env.NEXT_PUBLIC_UI_DEBUG_MODE === "tru
 
 export default function Home() {
 
-  const recordingContextRef = useRef<AudioContext | null>(null);
-  const playbackContextRef = useRef<AudioContext | null>(null);
-  const [isAudioContextStarted, setIsAudioContextStarted] = useState(false);
-  const incomingAudioBufferRef = useRef<ArrayBuffer[]>([]);
-  const isPlayingAudioRef = useRef(false);
-  
-  const [isRecording, setIsRecording] = useState(false);
-  const [isVoiceMode, setIsVoiceMode] = useState(true);
-  const [isSpeechDetected, setIsSpeechDetected] = useState(false);
-  const isSpeechDetectedRef = useRef(false);
+  const {
+    isRecording,
+    isVoiceMode,
+    isSpeechDetected,
+    chatHistory,
+    isIconAnimated,
+    isAgentThinking,
+    isAudioPlaying,
+    showStartButton,
+    isAudioGenerationDone,
+    handleRecordClick,
+    handleStartClick,
+    toggleVoiceMode,
+    handleSendMessage,
+  } = xRxClient({
+    orchestrator_host: NEXT_PUBLIC_ORCHESTRATOR_HOST,
+    orchestrator_port: NEXT_PUBLIC_ORCHESTRATOR_PORT,
+    orchestrator_path: NEXT_PUBLIC_ORCHESTRATOR_PATH,
+    greeting_filename: NEXT_PUBLIC_GREETING_FILENAME,
+    messageReceived: (message) => {
+      // Handle received messages
+    },
+    orchestrator_ssl: false,
+  });
 
-  const mediaRecorderRef = useRef<ScriptProcessorNode | null>(null);
-  const mediaStreamRef = useRef<MediaStream | null>(null);
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const socketRef = useRef<WebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const [isIconAnimated, setIsIconAnimated] = useState(false);
-  const [isAgentThinking, setIsAgentThinking] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [loadingButtons, setLoadingButtons] = useState<{ [key: string]: boolean }>({});
-  const currentBufferSourceRef = useRef<AudioBufferSourceNode | null>(null);
-
-  const [showStartButton, setShowStartButton] = useState(true);
-  const [isAudioGenerationDone, setIsAudioGenerationDone] = useState(false);
-
-  const widgetQueueRef = useRef<ChatMessage[]>([]); // queue used for widgets to make them play at the right time
 
   useEffect(() => {
     const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
@@ -67,36 +70,8 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    isSpeechDetectedRef.current = isSpeechDetected;
-  }, [isSpeechDetected]);
 
-  const vad = useMicVAD({
-    startOnLoad: true,
-    onSpeechStart: () => {
-      if(isRecording.valueOf()) {
-        console.log("User started talking");
-        setIsSpeechDetected(true);
-        incomingAudioBufferRef.current = [];
-        setIsAudioPlaying(false);
-
-        // Stop the current BufferSource if it's playing
-        if (currentBufferSourceRef.current) {
-          console.log("stopping the current playback");
-          currentBufferSourceRef.current.stop();
-          currentBufferSourceRef.current.disconnect();
-          currentBufferSourceRef.current = null;
-        }
-      } else {
-        setIsSpeechDetected(false);
-      }
-    },
-    onSpeechEnd: (audio) => {
-      console.log("User stopped talking");
-      setIsSpeechDetected(false);
-    }
-  });
-
+ 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -107,17 +82,7 @@ export default function Home() {
     scrollToBottom()
   }, [chatHistory]);
 
-  /*
-  useEffect (() => {
-    // initialize playback contetx
-    if(!playbackContextRef.current) {
-      playbackContextRef.current = new (window.AudioContext || window.webkitAudioContext)({
-        sampleRate: 16000
-      });
-    }
-  },[recordingContextRef, playbackContextRef, isAudioContextStarted, setIsAudioContextStarted]);
-*/
-
+  
   type ChatMessage = {
     sender: string;
     message: string;
@@ -126,319 +91,10 @@ export default function Home() {
     type?: string;
   };
 
-  const playReceivedAudio = useCallback((arrayBuffer: ArrayBuffer | null) => {
-    if (playbackContextRef.current) {
-      if (arrayBuffer !== null && !isSpeechDetectedRef.current) {
-        incomingAudioBufferRef.current.push(arrayBuffer as ArrayBuffer);
-      }
-      if (incomingAudioBufferRef.current.length > 0 && !isPlayingAudioRef.current && !isSpeechDetectedRef.current) {
-
-        const audioData = incomingAudioBufferRef.current.shift() as ArrayBuffer;
-        const int16Array = new Int16Array(audioData);
-
-        if (!isIconAnimated) {
-          setIsIconAnimated(true);
-          console.log("starting icon animation");
-        }
-        const durationSec = (int16Array.length / 16000);
-        console.log("received audio of duration : " + durationSec);
-        if (iconAnimationTimeout.current) {
-          clearTimeout(iconAnimationTimeout.current as NodeJS.Timeout);
-        }
-        iconAnimationTimeout.current = setTimeout(() => {
-          console.log("stopping icon animation");
-          setIsIconAnimated(false);
-        }, durationSec * 1000);
-
-        const float32Array = new Float32Array(int16Array.length);
-        for (let i = 0; i < int16Array.length; i++) {
-          float32Array[i] = int16Array[i] / 0x8000;
-        }
-
-        const channels = 1;
-        const sampleRate = 16000;
-        const buffer = playbackContextRef.current.createBuffer(channels, float32Array.length, sampleRate);
-        buffer.getChannelData(0).set(float32Array);
-
-        const source = playbackContextRef.current.createBufferSource();
-        source.buffer = buffer;
-        source.connect(playbackContextRef.current.destination);
-        source.start();
-        currentBufferSourceRef.current = source; // Store the reference to the current BufferSource
-        console.log("start playing audio");
-        isPlayingAudioRef.current = true;
-        setIsAudioPlaying(true);
-        console.log("isPlayingAudioRef.current after start:", isPlayingAudioRef.current);
-        source.onended = () => {
-          source.disconnect();
-          isPlayingAudioRef.current = false;
-          console.log("end playing audio");
-          setIsAudioPlaying(false);
-          console.log("isPlayingAudioRef.current after end:", isPlayingAudioRef.current);
-          playReceivedAudio(null);
-          processWidgetQueue(); // Process the widget queue after audio ends
-        }
-      }
-    }
-  }, [isIconAnimated, isSpeechDetected, isPlayingAudioRef, isSpeechDetectedRef]);
-
-  const processWidgetQueue = () => {
-    console.log(`processing the widget queue with length: ${widgetQueueRef.current.length}`);
-    while (widgetQueueRef.current.length > 0 && !isPlayingAudioRef.current) {
-      const widgetMessage = widgetQueueRef.current.shift();
-      if (widgetMessage) {
-        setChatHistory(currentChatHistory => [
-          ...currentChatHistory,
-          widgetMessage
-        ]);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (!socketRef.current) {
-
-      const socket = new WebSocket(`ws://${NEXT_PUBLIC_ORCHESTRATOR_HOST}:${NEXT_PUBLIC_ORCHESTRATOR_PORT}${NEXT_PUBLIC_ORCHESTRATOR_PATH}`);
-      socketRef.current = socket;
-      socket.binaryType = 'arraybuffer';
-
-      socket.onopen = () => {
-        console.log("WebSocket connection established");
-      };
-
-      socketRef.current.onmessage = (event) => {
-        console.log("Message received from server :" + event);
-        if (typeof event.data === 'string') {
-          const message = JSON.parse(event.data);
-          let content, widget:any;
-          if (message.type === 'widget') {
-            console.log(`widget received from server side and audio playing has value: ${isPlayingAudioRef.current}`);
-            widget = message.content;
-            content = '';
-            
-            if (isPlayingAudioRef.current) {
-              // Enqueue the widget message if audio is playing
-              console.log(`queuing the widget message`);
-              widgetQueueRef.current.push({
-                sender: message.user,
-                type: message.type,
-                message: message.content,
-                timestamp: new Date()
-              });
-              console.log(`widget queue length: ${widgetQueueRef.current.length}`);
-            } else {
-              // Display the widget message immediately if audio is not playing
-              setChatHistory(currentChatHistory => [
-                ...currentChatHistory,
-                { sender: message.user, type: message.type, message: message.content, timestamp: new Date() }
-              ]);
-            }
-          } else if(message.type === 'action') {
-            if(message.content === 'agent_started_thinking') {
-              setIsAgentThinking(true);
-            } else if(message.content === 'agent_ended_thinking') {
-              // wait a small amount of time here before making this change to allow for better animation
-              setTimeout(() => {
-                setIsAgentThinking(false);
-              }, 800);
-            }
-
-            // determine if the audio has been generated which is currently playing
-            if(message.content === 'audio_generation_done') {
-              console.log(`audio generation done from server side and audio playing has value: ${isPlayingAudioRef.current}`);
-              setIsAudioGenerationDone(true);
-            }
-
-            // perform action such as cancel audio.
-            if(message.content === 'clear_audio_buffer') {
-              console.log("Clearing audio buffer");
-              incomingAudioBufferRef.current = [];
-              setIsAudioPlaying(false);
-            }
-            return; // do not continue or set the chat history
-          }
-          else {
-            content = message.content;
-            setChatHistory(currentChatHistory => [
-              ...currentChatHistory,
-              { sender: message.user, type: message.type, message: message.content, timestamp: new Date() }
-            ]);
-          }
-
-        } else if (event.data instanceof ArrayBuffer) {
-          // Handle binary messages
-          console.log("Binary message received, starting audio playback");
-          playReceivedAudio(event.data);
-        }
-      }
-
-      socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-      };
-
-      socket.onclose = () => {
-        console.log("WebSocket connection closed");
-      };
-
-    };
-  }, [playReceivedAudio, isSpeechDetected]);
-
-  const sendPCMData = useCallback((pcmData: Int16Array) => {
-    // Send PCM data to the WebSocket server if the connection is open
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      socketRef.current.send(pcmData.buffer);
-    }
-  }, [socketRef.current]);
-
-  const startAudioCapture = useCallback(async () => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      console.error("MediaDevices are not supported by this browser.");
-      return;
-    }
-
-    if (!recordingContextRef.current) {
-      recordingContextRef.current = new (window.AudioContext || window.webkitAudioContext)({
-        sampleRate: 16000
-      });
-      console.log(`AudioContext CREATED ${recordingContextRef.current}`);
-    } else {
-      await recordingContextRef.current.resume();
-      console.log(`AudioContext RESUMED ${recordingContextRef.current}`);
-    }
-
-    setIsAudioContextStarted(true);
-
-    // Request permission to access the microphone and get the audio stream
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        noiseSuppression: true,
-        autoGainControl: true,
-        echoCancellation: true
-      }
-    });
-    let track = stream.getAudioTracks()[0];
-
-    // Create a MediaStreamSource from the audio stream
-    const mediaStreamSource = recordingContextRef.current.createMediaStreamSource(stream);
-    mediaStreamRef.current = stream;
-
-    // Create a ScriptProcessorNode to process the audio data
-    const scriptProcessor = recordingContextRef.current.createScriptProcessor(4096, 1, 1);
-    mediaRecorderRef.current = scriptProcessor; // Store the reference
-
-    // Connect the media stream source to the script processor
-    mediaStreamSource.connect(scriptProcessor);
-
-    // Connect the script processor to the audio context destination (speakers)
-    scriptProcessor.connect(recordingContextRef.current.destination);
-
-    // Event handler for processing the audio data
-    scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
-      const inputBuffer = audioProcessingEvent.inputBuffer;
-
-      for (let channel = 0; channel < inputBuffer.numberOfChannels; channel++) {
-        const inputData = inputBuffer.getChannelData(channel);
-        const pcmData = new Int16Array(inputData.length);
-
-        // Convert Float32Array data to Int16Array data
-        for (let sample = 0; sample < inputData.length; sample++) {
-          const normalizedSample = Math.max(-1, Math.min(1, inputData[sample]));
-          pcmData[sample] = normalizedSample < 0
-            ? normalizedSample * 0x8000
-            : normalizedSample * 0x7FFF;
-        }
-
-        // Send PCM data to WebSocket server
-        sendPCMData(pcmData);
-      }
-    };
-  }, [sendPCMData]);
-
-  const stopAudioCapture = useCallback(() => {
-    if (recordingContextRef.current) {
-      // Disconnect the script processor from the audio context's destination
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.disconnect();
-        mediaRecorderRef.current.onaudioprocess = null; // Clear the event handler
-        mediaRecorderRef.current = null; // Clear the reference
-      }
-
-      // Suspend the audio context instead of closing it
-      recordingContextRef.current.suspend().then(() => {
-        console.log("AudioContext suspended");
-      });
-    }
-
-    setIsRecording(false);
-  }, [recordingContextRef, mediaStreamRef]);
-
-  const handleRecordClick = useCallback(() => {
-    if(!playbackContextRef.current) {
-      playbackContextRef.current = new (window.AudioContext || window.webkitAudioContext)({
-        sampleRate: 16000
-      });
-    }
-    if (!isRecording) {
-      setShowStartButton(false);
-      startAudioCapture();
-      setIsRecording(true);
-    } else {
-      setIsAudioContextStarted(false);
-      setIsRecording(false);
-      stopAudioCapture();
-    }
-  }, [isRecording, startAudioCapture, stopAudioCapture]);
-
-
-  const handleStartClick = useCallback(() => {
-    const audio = new Audio(`/${NEXT_PUBLIC_GREETING_FILENAME}`);
-    audio.play();
-    setIsIconAnimated(true);
-    audio.onended = () => {
-      setIsIconAnimated(false);
-    }
-    setShowStartButton(false);
-    if(!isRecording) {
-      handleRecordClick();
-    }
-  }, [isRecording, isIconAnimated, handleRecordClick]);
 
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
-  }
-
-  const toggleVoiceMode = useCallback(() => {
-    if(isVoiceMode === true) {
-      setIsVoiceMode(false);
-      setIsRecording(false);
-      setShowStartButton(false);
-    } else {
-      setIsVoiceMode(true);
-    }
-  }, [isVoiceMode, setIsVoiceMode, isRecording, setIsRecording, handleRecordClick]);
-
-  const handleSendMessage = async () => {
-    try {
-      if (socketRef.current) {
-        const payload = {
-          type: 'text',
-          content: message
-        }
-        socketRef.current.send(JSON.stringify(payload));
-        console.log("Message sent successfully:", message);
-
-        setChatHistory(currentChatHistory => [
-          ...currentChatHistory,
-          { sender: 'user', message: `${message}`, timestamp: new Date() }
-        ]);
-
-        setMessage('');
-
-      }
-    } catch (error) {
-      console.error("Error sending message to backend:", error);
-    }
   }
 
   const sendAction = async (tool: string, parameters: any) => {
