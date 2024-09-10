@@ -1,0 +1,3 @@
+[submodule "simple-agent/xrx"]
+	path = simple-agent/xrx
+	url = https://github.com/8090-inc/xrx-core.git
