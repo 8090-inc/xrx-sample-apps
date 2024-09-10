@@ -14,10 +14,10 @@ services:
   xrx-orchestrator:
     container_name: xrx-orchestrator
     build:
-      context: ../../orchestrator
+      context: ./xrx-core/orchestrator
       dockerfile: Dockerfile
     ports:
-      - 8090:8090
+      - 8000:8000
     env_file:
       - .env
     networks:
@@ -26,10 +26,10 @@ services:
   xrx-reasoning:
     container_name: xrx-reasoning
     build:
-      context: .
+      context: ./reasoning
       dockerfile: Dockerfile
     ports:
-      - 8093:8093
+      - 8003:8003
     env_file:
       - .env
     networks:
@@ -38,10 +38,10 @@ services:
   xrx-stt:
     container_name: xrx-stt
     build:
-      context: ../../stt
+      context: ./xrx-core/stt
       dockerfile: Dockerfile
     ports:
-      - 8091:8091
+      - 8001:8001
     env_file:
       - .env
     networks:
@@ -50,10 +50,10 @@ services:
   xrx-tts:
     container_name: xrx-tts
     build:
-      context: ../../tts
+      context: ./xrx-core/tts
       dockerfile: Dockerfile
     ports:
-      - 8092:8092
+      - 8002:8002
     env_file:
       - .env
     networks:
@@ -62,10 +62,10 @@ services:
   xrx-guardrails:
     container_name: xrx-guardrails
     build:
-      context: ../../guardrails-proxy
+      context: ./xrx-core/guardrails-proxy
       dockerfile: Dockerfile
     ports:
-      - 8094:8094
+      - 8004:8004
     env_file:
       - .env
     networks:
