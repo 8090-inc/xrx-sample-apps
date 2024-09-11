@@ -1,0 +1,135 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.logo {
+  background-color: var(--logo-background-color);
+  border-radius: 50%;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pulsating {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--thinking-color);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.talkingIndicator {
+  width: 40px;
+  height: 4px;
+  background-color: var(--speaking-pulse-color);
+  border-radius: 2px;
+  margin-top: 1rem;
+}
+
+.interactionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 97vw;
+  min-height: 60vh;
+  max-height: 560px;
+  max-width: 800px;
+  position: fixed;
+  top: 19%;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .interactionContainer {
+    max-width: 385px;
+  }
+}
+
+.controlContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
+}
+
+.listeningIndicatorContainer {
+  height: 4px;
+  width: 80px;
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+
+.listeningIndicator {
+  height: 100%;
+  background-color: var(--speaking-pulse-color);
+  border-radius: 2px;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.5rem;
+  color: white;
+}
+
+.controlButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 80px;
+}
+
+.controlIcon {
+  background-color: white;
+  border-radius: 50%;
+  padding: 0.55rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.controlLabel {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  width: 100%;
+  text-align: center;
+  color: var(--font-color-on-background);
+}
+
+.endButton .controlIcon {
+  background-color: #e31837;
+}
+
+.muteButton {
+  position: relative;
+}
+
+.muteButton .controlLabel {
+  font-size: 0.9rem;
+}
