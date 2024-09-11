@@ -2,8 +2,8 @@ services:
   xrx-client:
     container_name: xrx-client
     build:
-      context: ./nextjs-client
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: nextjs-client/Dockerfile
     ports:
       - 3000:3000
     env_file:

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "cd ../xrx-core/react-xrx-client-lib && npm install && npm run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

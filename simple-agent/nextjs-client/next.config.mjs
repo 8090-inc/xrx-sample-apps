@@ -36,6 +36,7 @@ const nextConfig = {
 
     return config
   },
+  transpilePackages: ['react-xrx-client-lib'],
 };
 
 import { config as configDotenv } from 'dotenv';
