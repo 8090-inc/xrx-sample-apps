@@ -4,18 +4,8 @@ jsx;
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react"
 import { jsx } from "react/jsx-runtime";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'
-import { useMicVAD } from "@ricky0123/vad-react"
 import { ScaleLoader, SyncLoader, HashLoader, PulseLoader } from "react-spinners";
-
-import xRxClient from "react-xrx-client-lib";
-
-declare global {
-  interface Window {
-    webkitAudioContext: typeof AudioContext;
-  }
-}
+import xRxClient from "../../../xrx-core/react-xrx-client/dist";
 
 const NEXT_PUBLIC_ORCHESTRATOR_HOST = process.env.NEXT_PUBLIC_ORCHESTRATOR_HOST || "localhost";
 const NEXT_PUBLIC_ORCHESTRATOR_PORT = process.env.NEXT_PUBLIC_ORCHESTRATOR_PORT || "8000";
@@ -71,8 +61,8 @@ export default function Home() {
     };
   }, []);
 
+  
 
- 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -92,61 +82,9 @@ export default function Home() {
     type?: string;
   };
 
-
-
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
   }
-
-  const sendAction = async (tool: string, parameters: any) => {
-    try {
-        const payload = {
-          type: 'action',
-          content: {
-            tool: tool,
-            parameters: JSON.stringify(parameters)
-          },
-          modality: isVoiceMode ? 'audio' : 'text'
-        } 
-        sendMessage(message);
-        console.log("Action sent successfully:", payload);
-    } catch (error) {
-      console.error("Error sending action to backend:", error);
-    }
-  }
-
-  const handleButtonClick = (buttonId: string, action: () => void) => {
-    setLoadingButtons(prevState => ({ ...prevState, [buttonId]: true }));
-    action();
-  };
-
-  const showDetails = (element: any, productId: number) => {
-    handleButtonClick(`details-${productId}`, () => {
-      console.log("Showing details for product", productId);
-      sendAction('get_product_details', { 'product_id': productId });
-    });
-  };
-
-  const addToCart = (element: any, variantId: number, quantity: number) => {
-    handleButtonClick(`add-${variantId}`, () => {
-      console.log("Adding to cart:", variantId, quantity);
-      sendAction('add_item_to_cart', { 'variant_id': variantId, 'quantity': quantity });
-    });
-  };
-
-  const removeFromCart = (element: any, variantId: number) => {
-    handleButtonClick(`remove-${variantId}`, () => {
-      console.log("Removing from cart:", variantId);
-      sendAction('remove_item_from_cart', { 'variant_id': variantId });
-    });
-  };
-
-  const submitOrder = (element: any) => {
-    handleButtonClick('submit-order', () => {
-      console.log("Submitting order");
-      sendAction('submit_cart_for_order', {});
-    });
-  };
 
   const renderWidget = useCallback((widget: any) => {
     let details: any;
