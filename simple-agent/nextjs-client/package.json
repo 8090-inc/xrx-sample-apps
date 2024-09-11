@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "cd ../xrx-core/react-xrx-client-lib && npm install && npm run build",
+    "prebuild": "cd ../xrx-core/react-xrx-client && npm install && npm run build",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy-onnx": "cp node_modules/onnxruntime-web/dist/*.wasm public/"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -16,6 +17,7 @@
     "@nextui-org/react": "^2.4.2",
     "@radix-ui/react-icons": "^1.3.0",
     "@ricky0123/vad-react": "^0.0.24",
+    "@ricky0123/vad-web": "^0.0.18",
     "@types/json2md": "^1.5.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -28,7 +30,7 @@
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "react-spinners": "^0.13.8",
-    "react-xrx-client-lib": "file:../xrx-core/react-xrx-client-lib",
+    "react-xrx-client": "file:../xrx-core/react-xrx-client",
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.0",
@@ -36,7 +38,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "copy-webpack-plugin": "^12.0.2",

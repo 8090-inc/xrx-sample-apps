@@ -15,14 +15,6 @@ const nextConfig = {
       new CopyPlugin({
         patterns: [
           {
-            from: "./node_modules/onnxruntime-web/dist/ort-wasm.wasm",
-            to: "static/chunks/[name][ext]",
-          },
-          {
-            from: "./node_modules/onnxruntime-web/dist/ort-wasm-simd.wasm",
-            to: "static/chunks/[name][ext]",
-          },
-          {
             from: "node_modules/@ricky0123/vad-web/dist/vad.worklet.bundle.min.js",
             to: "static/chunks/[name][ext]",
           },
@@ -30,13 +22,27 @@ const nextConfig = {
             from: "node_modules/@ricky0123/vad-web/dist/*.onnx",
             to: "static/chunks/[name][ext]",
           },
+          {
+            from: "node_modules/onnxruntime-web/dist/*.wasm",
+            to: "static/chunks/[name][ext]",
+          },
+          // Copy JS files from lib/wasm/binding
+          {
+            from: 'node_modules/onnxruntime-web/lib/wasm/binding/*.js',
+            to:'static/chunks/[name].mjs',
+          },
+          // Copy worker files
+          {
+            from: 'node_modules/onnxruntime-web/lib/wasm/binding/*.worker.js',
+            to: 'static/chunks/[name].mjs',
+          },
         ],
       })
     )
 
     return config
   },
-  transpilePackages: ['react-xrx-client-lib'],
+  transpilePackages: ['react-xrx-client'],
 };
 
 import { config as configDotenv } from 'dotenv';

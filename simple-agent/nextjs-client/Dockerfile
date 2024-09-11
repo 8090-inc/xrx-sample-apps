@@ -9,8 +9,8 @@ WORKDIR /
 # Copy package.json and other necessary files
 COPY nextjs-client /nextjs-client
 
-# Copy react-xrx-client-lib
-COPY xrx-core/react-xrx-client-lib /xrx-core/react-xrx-client-lib
+# Copy react-xrx-client
+COPY xrx-core/react-xrx-client /xrx-core/react-xrx-client
 
 # Return to app directory and install dependencies
 WORKDIR /nextjs-client

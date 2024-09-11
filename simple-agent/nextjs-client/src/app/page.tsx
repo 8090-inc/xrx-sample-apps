@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react"
 import { jsx } from "react/jsx-runtime";
 import { ScaleLoader, SyncLoader, HashLoader, PulseLoader } from "react-spinners";
-import xRxClient from "../../../xrx-core/react-xrx-client/dist";
+import xRxClient, { ChatMessage } from "../../../xrx-core/react-xrx-client/src";
+import { useMicVAD } from "@ricky0123/vad-react"
 
 const NEXT_PUBLIC_ORCHESTRATOR_HOST = process.env.NEXT_PUBLIC_ORCHESTRATOR_HOST || "localhost";
 const NEXT_PUBLIC_ORCHESTRATOR_PORT = process.env.NEXT_PUBLIC_ORCHESTRATOR_PORT || "8000";
@@ -16,36 +17,60 @@ const NEXT_PUBLIC_UI_DEBUG_MODE = process.env.NEXT_PUBLIC_UI_DEBUG_MODE === "tru
 export default function Home() {
 
   const {
+    // State variables
     isRecording,
     isVoiceMode,
-    isSpeechDetected,
+    isUserSpeaking,
     chatHistory,
-    isIconAnimated,
+    isAgentSpeaking,
     isAgentThinking,
     isAudioPlaying,
     showStartButton,
     isAudioGenerationDone,
-    handleRecordClick,
-    handleStartClick,
+
+    // Set functions
+    setIsRecording,
+    setIsVoiceMode,
+    setIsUserSpeaking,
+    setChatHistory,
+    setIsAgentSpeaking,
+    setIsAgentThinking,
+    setIsAudioPlaying,
+    setShowStartButton,
+    setIsAudioGenerationDone,
+
+    // Handler functions
+    startAgent,
+    toggleIsRecording,
     toggleVoiceMode,
-    handleSendMessage,
     sendMessage,
+
   } = xRxClient({
     orchestrator_host: NEXT_PUBLIC_ORCHESTRATOR_HOST,
     orchestrator_port: NEXT_PUBLIC_ORCHESTRATOR_PORT,
     orchestrator_path: NEXT_PUBLIC_ORCHESTRATOR_PATH,
     greeting_filename: NEXT_PUBLIC_GREETING_FILENAME,
-    messageReceived: (message) => {
-      // Handle received messages
-    },
     orchestrator_ssl: false,
   });
 
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [loadingButtons, setLoadingButtons] = useState<{ [key: string]: boolean }>({});
 
+  /* Voice Activity Detection */
+  useMicVAD({
+    startOnLoad: true,
+    onSpeechStart: () => {
+      console.log("User started talking");
+      setIsUserSpeaking(true);
+    },
+    onSpeechEnd: () => {
+      console.log("User stopped talking");
+      setIsUserSpeaking(false);
+    },
+  })
+
+  /* Dark mode */
   useEffect(() => {
     const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
     setIsDarkMode(matchMedia.matches);
@@ -62,30 +87,15 @@ export default function Home() {
   }, []);
 
   
-
+  /* constantly scroll to the bottom of the chat */
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
-
-  const iconAnimationTimeout = useRef<NodeJS.Timeout | null>(null);
-
   useEffect(() => {
     scrollToBottom()
   }, [chatHistory]);
 
-  
-  type ChatMessage = {
-    sender: string;
-    message: string;
-    widget?: any;
-    timestamp: Date;
-    type?: string;
-  };
-
-  const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(event.target.value);
-  }
-
+  /* Render widget */
   const renderWidget = useCallback((widget: any) => {
     let details: any;
 
@@ -107,10 +117,23 @@ export default function Home() {
     );
   }, []);
 
-  useEffect(() => {
-    // Reset loading buttons state whenever chatHistory changes
-    setLoadingButtons({});
-  }, [chatHistory]);
+  /* Click Handlers */
+  const handleStartClick = () => {
+    startAgent();
+  }
+
+  const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value);
+  }
+  
+  const handleRecordClick = () => {
+    toggleIsRecording();
+  }
+
+  const handleSendMessage = () => {
+    sendMessage(message);
+    setMessage('');
+  }
 
   return (
     <main className="mainContainer">
@@ -126,25 +149,25 @@ export default function Home() {
         <div className={`iconContainer flex ${!isVoiceMode ? 'hidden' : ''}`}>
           <SyncLoader
                   color={"#F15950"}
-                  loading={isIconAnimated}
+                  loading={isAgentSpeaking}
                   size={20}
                   />
           <PulseLoader
               color={"#F15950"}
-              loading={!isIconAnimated && isAgentThinking}
+              loading={!isAgentSpeaking && isAgentThinking}
               size={20}
               />
 
           <div style={{
-            width: isIconAnimated || isAgentThinking ? '0px' : '50px',
-            height: isIconAnimated || isAgentThinking ? '0px' : '50px',
+            width: isAgentSpeaking || isAgentThinking ? '0px' : '50px',
+            height: isAgentSpeaking || isAgentThinking ? '0px' : '50px',
             borderRadius: '50%',
             backgroundColor: '#F15950',
             transition: 'all 0.5s',
             position: 'absolute',
             left: '50%',
             top: '40',
-            transform: isIconAnimated || isAgentThinking ? 'translate(-50%, 0) scale(0)' : 'translate(-50%, 0) scale(1)',
+            transform: isAgentSpeaking || isAgentThinking ? 'translate(-50%, 0) scale(0)' : 'translate(-50%, 0) scale(1)',
             transformOrigin: 'center center'
           }}></div>
           
@@ -194,7 +217,7 @@ export default function Home() {
                 <ScaleLoader
                   className="voiceIndicator"
                   color={"rgb(var(--foreground-rgb))"}
-                  loading={isSpeechDetected}
+                  loading={isUserSpeaking}
                   radius={10}
                   height={20}
                   width={20}
@@ -203,7 +226,7 @@ export default function Home() {
                 <ScaleLoader
                   className="voiceIndicator"
                   color={"rgb(var(--foreground-rgb))"}
-                  loading={!isSpeechDetected}
+                  loading={!isUserSpeaking}
                   radius={5}
                   height={7}
                   width={20}
@@ -241,7 +264,7 @@ export default function Home() {
               alt="Send Message"
               className="sendButton"
               style={{float: 'right'}}
-              onClick={handleSendMessage}
+              onClick={handleSendMessage}              
             />
           </div>
           }
