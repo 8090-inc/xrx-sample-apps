@@ -31,7 +31,7 @@ const NEXT_PUBLIC_ORCHESTRATOR_PATH =
 const NEXT_PUBLIC_UI_DEBUG_MODE =
   process.env.NEXT_PUBLIC_UI_DEBUG_MODE === "true";
 const NEXT_PUBLIC_GREETING_FILENAME =
-  process.env.NEXT_PUBLIC_GREETING_FILENAME || "greeting.mp3";
+  process.env.NEXT_PUBLIC_GREETING_FILENAME || "patient-info-start.mp3";
 
 const skinConfig = SkinConfigurations["patient-information-agent"];
 
@@ -84,9 +84,6 @@ export default function Home() {
   const incomingAudioBufferRef = useRef<ArrayBuffer[]>([]);
   const isPlayingAudioRef = useRef(false);
 
-  const [isMicOn, setIsMicOn] = useState(false);
-  const isMicOnRef = useRef(false);
-
   const [isSpeechDetected, setIsSpeechDetected] = useState(false);
   const isSpeechDetectedRef = useRef(false);
 
@@ -105,20 +102,6 @@ export default function Home() {
   }>({});
 
   const [currentPage, setCurrentPage] = useState("welcome");
-  const widgetQueueRef = useRef<ChatMessage[]>([]); // queue used for widgets to make them play at the right time
-
-
-  useEffect(() => {
-    isSpeechDetectedRef.current = isSpeechDetected;
-    isMicOnRef.current = isMicOn;
-  }, [isSpeechDetected, isMicOn]);
-
-
-
-  const handleButtonClick = (buttonId: string, action: () => void) => {
-    setLoadingButtons((prevState) => ({ ...prevState, [buttonId]: true }));
-    action();
-  };
 
   const renderWidget = useCallback(
     (widget: any) => {
@@ -161,8 +144,10 @@ export default function Home() {
   }, [chatHistory]);
 
   /* Click Handlers */
-  const handleStartClick = () => {
+  const handleStartClick = function() {
+    console.log("start");
     startAgent();
+    setCurrentPage("home");
   }
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -309,14 +294,14 @@ export default function Home() {
               >
                 <Image
                   className={styles.controlIcon}
-                  src={isMicOn ? "/mic_on.svg" : "/mic_off.svg"}
+                  src={isRecording ? "/mic_on.svg" : "/mic_off.svg"}
                   width={60}
                   height={60}
                   alt="Microphone Icon"
                 />
 
                 <span className={styles.controlLabel}>
-                  {isMicOn ? "Mute" : "Unmute"}
+                  {isRecording ? "Mute" : "Unmute"}
                 </span>
               </motion.button>
             </div>
