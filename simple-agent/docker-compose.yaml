@@ -26,8 +26,8 @@ services:
   xrx-reasoning:
     container_name: xrx-reasoning
     build:
-      context: ./reasoning
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: reasoning/Dockerfile
     ports:
       - 8003:8003
     env_file:
