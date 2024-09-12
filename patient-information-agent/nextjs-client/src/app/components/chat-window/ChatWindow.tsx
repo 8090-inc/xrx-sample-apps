@@ -1,6 +1,6 @@
 import styles from "./ChatWindow.module.css";
 import Image from "next/image";
-import { ChatMessage } from "../../types/chat";
+import { ChatMessage } from "react-xrx-client";
 
 interface ChatWindowProps {
   chatHistory: ChatMessage[];
