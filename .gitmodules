@@ -2,3 +2,7 @@
 	path = simple-agent/xrx-core
 	url = https://github.com/8090-inc/xrx-core.git
 	branch = feature/refactor
+[submodule "patient-information-agent/xrx-core"]
+	path = patient-information-agent/xrx-core
+	url = https://github.com/8090-inc/xrx-core.git
+	branch = feature/refactor

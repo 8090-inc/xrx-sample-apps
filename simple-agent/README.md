@@ -33,27 +33,6 @@ LLM_MODEL_ID="llama3-70b-8192"
 
 ## How To Run
 
-### Locally without Docker
-
-1. Set up the Python virtual environment:
-```
-python3 -m venv venv
-source venv/bin/activate
-```
-
-2. Install requirements:
-```bash
-pip install -r requirements.txt
-```
-
-3. Run the application:
-```bash
-cd app
-uvicorn main:app --host 127.0.0.1 --port 8093 --reload
-```
-
-The agent will now be running at `http://localhost:8093` (or the port specified in your `.env` file).
-
 ### Using Docker
 
 1. Build the Docker image:
@@ -67,6 +46,33 @@ The agent will now be running at `http://localhost:8093` (or the port specified 
    ```
 
 The agent will be accessible at `http://localhost:8093`.
+
+
+### Locally without Docker
+
+1. Set up the Python virtual environment:
+  ```
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+2. Install requirements:
+  ```bash
+  pip install -r requirements.txt
+  ```
+3. Start a local redis cluster
+  ```bash
+  redis-server --port 6379
+  ```
+
+4. Run the application:
+  ```bash
+  cd app
+  uvicorn main:app --host 127.0.0.1 --port 8093 --reload
+  ```
+
+The agent will now be running at `http://localhost:8093` (or the port specified in your `.env` file).
+
 
 ## API Usage
 

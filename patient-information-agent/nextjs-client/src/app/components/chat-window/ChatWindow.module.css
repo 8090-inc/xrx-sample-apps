@@ -1,0 +1,94 @@
+.chatMainContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  padding: 0 0.9rem;
+  overflow: scroll;
+}
+.agentMessage,
+.userMessage {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+
+.agentMessageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.agentMessage {
+  align-self: flex-start;
+  background-color: #e3f2fd;
+  border-bottom-left-radius: 0;
+}
+
+.userMessageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userMessage {
+  align-self: flex-end;
+  background-color: #1e88e5;
+  color: white;
+  border-bottom-right-radius: 0;
+}
+
+.inputContainer {
+  padding: 0.65em;
+  align-items: center;
+  align-self: center;
+  width: 80%;
+}
+
+.textInputBox {
+  line-height: 1.2em;
+  font-size: 1em;
+  border: 1px solid rgb(147, 197, 253);
+  padding: 0.75rem 3rem 0.5rem 0.8rem;
+  border-radius: 30px;
+  width: 100%;
+  resize: none;
+}
+
+.textInputBox:focus {
+  outline: none;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+    calc(2px + var(--tw-ring-offset-width)) rgb(147, 197, 253);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+.textInputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.sendButton {
+  position: absolute;
+  right: 0.75rem;
+  top: 40%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 5px;
+  /* padding: 4px; */
+}
+
+@media (max-width: 768px) {
+  .agentMessage,
+  .userMessage {
+    max-width: 90%;
+  }
+}

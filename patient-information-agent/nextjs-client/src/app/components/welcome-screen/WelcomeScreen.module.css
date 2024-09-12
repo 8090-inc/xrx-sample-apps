@@ -1,0 +1,46 @@
+.welcomeScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 400px;
+  height: 45vh;
+}
+.welcomeScreenLogo {
+  max-width: 275px;
+  height: auto;
+  margin-top: 30%;
+}
+
+.welcomeText {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.welcomeScreenButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  width: 100%;
+  position: absolute;
+}
+
+.welcomeScreenButton span {
+  font-size: 1.3em;
+  letter-spacing: 0.03em;
+}
+
+/* Iphone 14 Pro Max Settings */
+@media (max-height: 932px) and (max-width: 430px) {
+  .welcomeScreenButton {
+    bottom: 35%;
+  }
+}
+
+@media (min-width: 431px) {
+  .welcomeScreenButton {
+    bottom: 30%;
+  }
+}
