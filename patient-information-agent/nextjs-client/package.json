@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "cd ../xrx-core/react-xrx-client && npm install && npm run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -29,6 +30,7 @@
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "react-spinners": "^0.13.8",
+    "react-xrx-client": "file:../xrx-core/react-xrx-client",
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.0",
