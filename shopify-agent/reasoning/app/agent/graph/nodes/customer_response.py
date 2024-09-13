@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # set up llm
-LLM_CLIENT = initialize_llm_client()
+LLM_CLIENT = initialize_async_llm_client()
 LLM_MODEL_ID = os.environ.get('LLM_MODEL_ID', '')
 
 SYSTEM_PROMPT = '''\

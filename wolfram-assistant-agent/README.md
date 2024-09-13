@@ -21,8 +21,7 @@ brew cask install docker
 brew install python@3.10
 ```
 
-Create your `WOLFRAM_API_ID` from [Wolfram Alpha's API dashboard](https://developer.wolframalpha.com/portal/myapps/) and set the `WOLFRAM_BASE_URL` to `http://api.wolframalpha.com/v1/conversation.jsp` as environment variables.
-
+Create your `WOLFRAM_API_ID` from [Wolfram Alpha's API dashboard](https://developer.wolframalpha.com/portal/myapps/) and set the `WOLFRAM_BASE_URL` to `http://api.wolframalpha.com/v1/conversation.jsp` as environment variables. Select the conversational API.
 ```env
 WOLFRAM_API_ID="YOUR_WOLFRAM_API_ID"
 WOLFRAM_BASE_URL="http://api.wolframalpha.com/v1/conversation.jsp"
