@@ -77,7 +77,7 @@ async def single_turn_agent(messages: List[Dict[str, str]]) -> Dict[str, any]:
         "type": "function",
         "function": {
             "name": "ask_wolfram_assistant",
-            "description": "Get an educational response to a question",
+            "description": "You must use this tool for when information needs to be up to date. You must use it for any math related questions.",
             "parameters": {
                 "type": "object",
                 "properties": {
