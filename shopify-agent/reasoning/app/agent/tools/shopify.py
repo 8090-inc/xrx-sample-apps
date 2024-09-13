@@ -7,7 +7,7 @@ from ..utils.shopify import (
     make_new_blank_cart,
 )
 from ..context_manager import session_var
-from ..utils.llm import observability_decorator
+from agent_framework import observability_decorator
 from dotenv import load_dotenv
 import json
 

@@ -1,5 +1,5 @@
 from .tools.shopify import *
-from .utils.llm import make_tools_description
+from agent_framework import make_tools_description
 
 import os
 

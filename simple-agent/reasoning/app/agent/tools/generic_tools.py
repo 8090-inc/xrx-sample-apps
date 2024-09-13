@@ -2,7 +2,7 @@ import requests
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 from datetime import datetime
-from ..utils.llm import observability_decorator
+from agent_framework import observability_decorator
 import yfinance as yf
 
 @observability_decorator(name="get_weather_by_location")
