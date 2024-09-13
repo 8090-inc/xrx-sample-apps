@@ -1,7 +1,7 @@
 from .context_manager import set_session, session_var
 import asyncio
 import json
-from .utils.llm import observability_decorator
+from agent_framework import observability_decorator
 from .graph.main import agent_graph
 import logging
 import traceback
