@@ -1,16 +1,16 @@
-[submodule "simple-agent/xrx-core"]
-	path = simple-agent/xrx-core
+[submodule "simple-app/xrx-core"]
+	path = simple-app/xrx-core
 	url = https://github.com/8090-inc/xrx-core.git
 	branch = feature/refactor
-[submodule "patient-information-agent/xrx-core"]
+[submodule "patient-information-app/xrx-core"]
 	path = patient-information-agent/xrx-core
 	url = https://github.com/8090-inc/xrx-core.git
 	branch = feature/refactor
-[submodule "wolfram-assistant-agent/xrx-core"]
-	path = wolfram-assistant-agent/xrx-core
+[submodule "wolfram-assistant-app/xrx-core"]
+	path = wolfram-assistant-app/xrx-core
 	url = https://github.com/8090-inc/xrx-core.git
 	branch = feature/refactor
-[submodule "shopify-agent/xrx-core"]
-	path = shopify-agent/xrx-core
+[submodule "shopify-app/xrx-core"]
+	path = shopify-app/xrx-core
 	url = https://github.com/8090-inc/xrx-core.git
 	branch = feature/refactor
