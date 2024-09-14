@@ -14,9 +14,6 @@ import Menu from "./components/menu/Menu";
 import WelcomeScreen from "./components/welcome-screen/WelcomeScreen";
 import { BottomCTA } from "./components/base/Base";
 import PreInteractionComponent from "./components/pre-interaction-widget/PreInteractionComponent";
-// ======================
-// import PatientIntakeForm from "./components/patient-intake-form/PatientIntakeForm";
-// ======================
 import ChatWindow from "./components/chat-window/ChatWindow";
 import { SkinConfigurations } from "./types/skinConfig";
 
@@ -230,10 +227,6 @@ export default function Home() {
             handleRecordClick();
           }
           return null;
-        // ======================
-        // case "patient-information":
-        //   return <PatientIntakeForm details={details} />;
-        // ======================
         case "pre-interaction":
           return <PreInteractionComponent agentType={NEXT_PUBLIC_AGENT} />;
         default:
@@ -258,31 +251,6 @@ export default function Home() {
       )}
       {currentPage === "home" && (
         <>
-          <div className={styles.logoContainer}>
-            <motion.div
-              key={isAgentThinking ? "thinking" : "not-thinking"}
-              className={`${styles.logo} ${
-                isAgentThinking && !isAgentSpeaking ? styles.pulsating : ""
-              }`}
-              animate={isAgentThinking ? { scale: [1, 1.1, 1] } : { scale: 1 }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            >
-              <Image
-                src={skinConfig.logoSrc}
-                alt="Main Icon"
-                width={80}
-                height={80}
-              />
-            </motion.div>
-            {isAgentSpeaking && (
-              <motion.div
-                className={styles.talkingIndicator}
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: [0, 1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-              />
-            )}
-          </div>
           <motion.div
             key={isVoiceMode ? "voice" : "chat"}
             className={styles.interactionContainer}

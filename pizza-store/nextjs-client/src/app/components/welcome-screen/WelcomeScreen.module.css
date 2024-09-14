@@ -22,9 +22,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 500px;
   width: 100%;
   position: absolute;
+  left: 25%;
+  transform: translateX(-50%);
+  max-width: 600px;
 }
 
 .welcomeScreenButton span {

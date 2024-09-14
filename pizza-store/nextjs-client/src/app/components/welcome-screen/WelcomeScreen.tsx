@@ -12,35 +12,14 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, config }) => {
   return (
-    <div className={styles.welcomeScreen}>
-      {" "}
-      <WidgetWrapper title="" useScrollableList={false}>
-        <motion.img
-          className={styles.welcomeScreenLogo}
-          src={config.welcomeScreenLogoSrc}
-          alt="WelcomeLogo"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{
-            delay: 0.2,
-            type: "spring",
-            stiffness: 260,
-            damping: 20
-          }}
-        />
-        {config.welcomeText && (
-          <motion.h1
-            className={styles.welcomeText}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            {config.welcomeText}
-          </motion.h1>
-        )}
-      </WidgetWrapper>
-      <div className={styles.welcomeScreenButton}>
-        {" "}
+    <div className={styles.welcomeScreen} style={{
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    }}>
+    
+      <div className={styles.welcomeScreenButton} style={{ flex: '1' }}>
+
         <BottomCTA onClick={onStart}>
           <span>{config.buttonText}</span>
           <Image

@@ -35,11 +35,14 @@ const PreInteractionComponent: React.FC<{ agentType: string }> = ({
   agentType
 }) => {
   return agentType === "pizza-agent" ? (
-    <WidgetWrapper title="Popular Items">
-      {popularDishes.map((dish) => (
-        <ItemCard key={dish.name} title={dish.name} image={dish.image} />
-      ))}
-    </WidgetWrapper>
+    <div>
+      <img src="/popular-header.png" alt="Most Popular Items" className={styles.headerImage} />
+      <WidgetWrapper title="">
+        {popularDishes.map((dish) => (
+          <ItemCard key={dish.name} title={dish.name} image={dish.image} />
+        ))}
+      </WidgetWrapper>
+    </div>
   ) : null;
 };
 

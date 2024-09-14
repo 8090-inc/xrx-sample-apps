@@ -25,7 +25,7 @@ const SkinConfigurations: Record<string, SkinConfig> = {
       secondaryColor: "#f9b407",
       mainFont: "Open Sans, Arial, Helvetica, sans-serif",
       logoBackgroundColor: "#faf5a3",
-      fontColorOnBackground: "#333",
+      fontColorOnBackground: "#fff",
       speakingPulseColor: "#f9b407",
       thinkingColor: "#f9b407"
     }
