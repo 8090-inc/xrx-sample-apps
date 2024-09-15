@@ -1,0 +1,98 @@
+# ============== Configuration ==============
+# Minimal configuration to get started.
+# Get your API keys from the following URLs:
+# - Groq: https://console.groq.com/keys/
+# - ElevenLabs: https://elevenlabs.io/app/speech-synthesis/text-to-speech
+# =============================================
+
+# === LLM Configuration ===
+LLM_API_KEY="your_groq_api_key_here"
+LLM_BASE_URL="https://api.groq.com/openai/v1"
+LLM_MODEL_ID="llama3-70b-8192"
+
+# === Speech-to-Text (STT) Configuration ===
+STT_PROVIDER="groq"     # Alternative providers are  "deepgram", "faster_whisper"
+GROQ_STT_API_KEY="your_groq_api_key_here"
+
+# === Text-to-Speech (TTS) Configuration ===
+TTS_PROVIDER="elevenlabs"       # Alternative providers: "deepgram", "openai", "cartesia"
+ELEVENLABS_API_KEY="your_elevenlabs_api_key"
+ELEVENLABS_VOICE_ID="tnSpp4vdxKPjI9w0GnoV"
+
+# === Wolfram Alpha Configuration ===
+WOLFRAM_API_ID="YOUR_WOLFRAM_API_ID"
+WOLFRAM_BASE_URL="http://api.wolframalpha.com/v1/conversation.jsp"
+
+# =============================================
+# Customize your configuration below
+# =============================================
+
+# === Reasoning Configuration ===
+INITIAL_RESPONSE="Hello! How can I help you?"
+
+# === Speech-to-Text (STT) Configuration ===
+DG_API_KEY="your_deepgram_api_key"  # required if you want to use Deepgram
+
+# === Text-to-Speech (TTS) Configuration ===
+# Get your API keys from the following URLs:
+# - Deepgram: https://deepgram.com/
+# - OpenAI: https://openai.com/
+# Deepgram configuration
+DG_TTS_MODEL_VOICE="aura-asteria-en"
+DG_API_KEY="your_deepgram_api_key"
+# OpenAI configuration
+OPENAI_API_KEY="your_openai_api_key"
+OPENAI_TTS_MODEL="tts-1"
+OPENAI_TTS_VOICE="alloy"
+# CACHE_DIR="your_cache_directory_path"
+
+
+# === Guardrails Proxy Configuration ===
+AGENT_HOST="xrx-guardrails"
+AGENT_PORT="8004"
+GUARDRAILS_AGENT_HOST="xrx-reasoning"
+GUARDRAILS_AGENT_PORT="8003"
+
+# === LLM Observability Configuration ===
+LLM_OBSERVABILITY_LIBRARY="none"
+# Alternatives: 
+# LLM_OBSERVABILITY_LIBRARY="langsmith"
+# LLM_OBSERVABILITY_LIBRARY="langfuse"
+
+# Langfuse configuration
+LANGFUSE_SECRET_KEY="your_langfuse_secret_key"
+LANGFUSE_PUBLIC_KEY="your_langfuse_public_key"
+LANGFUSE_HOST="http://host.docker.internal:3001"
+# For localhost: LANGFUSE_HOST="http://localhost:3001"
+# For cloud-hosted Langfuse: LANGFUSE_HOST="https://us.cloud.langfuse.com"
+
+# LangSmith configuration
+LANGCHAIN_TRACING_V2="true"
+LANGCHAIN_API_KEY="your_langsmith_api_key"
+LANGCHAIN_PROJECT="your_langsmith_project_name"
+LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
+
+# === UI ===
+NEXT_PUBLIC_UI_DEBUG_MODE="false"
+
+# === Redis Configuration ===
+REDIS_HOST="xrx-redis"
+
+# === LLM Configuration ===
+# JSON fixing model (if needed)
+LLM_MODEL_ID_JSON_FIXER="llama3-70b-8192"
+
+# === Orchestrator Configuration ===
+# AGENT_WAIT_MS="your_agent_wait_time"
+# SAMPLE_RATE="your_sample_rate"
+# STT_WAIT_MS="your_stt_wait_time"
+
+# STT_HOST="xrx-stt"
+# STT_PORT="8001"
+# STT_PATH="/api/v1/ws"
+
+# TTS_HOST="xrx-tts"
+# TTS_PORT="8002"
+# TTS_PATH="/api/v1/ws"
+
+# AGENT_PATH="/run-reasoning-agent"

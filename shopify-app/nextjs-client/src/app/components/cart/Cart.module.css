@@ -1,0 +1,22 @@
+.cartTotal {
+  color: var(--font-color-on-background);
+  padding: 0.5rem 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 400;
+}
+
+.cartTotalText {
+  font-size: 1.3rem;
+}
+
+.cartTotalPrice {
+  font-size: 1.5rem;
+}
+
+.emptyCart {
+  color: var(--font-color-on-background);
+  text-align: center;
+  font-size: 1.2rem;
+}
