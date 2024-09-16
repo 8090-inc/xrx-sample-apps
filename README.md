@@ -6,11 +6,10 @@ The reasoning systems process input, generate responses and manage the overall c
 
 ## Available Reasoning Applications
 
-1. [Simple Agent](./simple-agent): A basic template for creating custom reasoning agents.
-2. [Shopify Agent](./shopify-agent): An agent designed to handle app-based interactions with a Shopify store.
-3. [Wolfram Agent](./wolfram-assistant-agent): An agent designed to handle math and physics-based interactions.
-4. [Template Agent](./template-agent): A starting point for developing new reasoning agents.
-5. [Patient Information Agent](./patient-information-agent): An agent designed to collect and manage patient information before a doctor's visit.
+1. [Simple Agent](./simple-app): A basic template for creating custom reasoning agents.
+2. [Shopify Agent](./shopify-app): An agent designed to handle app-based interactions with a Shopify store.
+3. [Wolfram Agent](./wolfram-assistant-app): An agent designed to handle math and physics-based interactions.
+4. [Patient Information Agent](./patient-information-app): An agent designed to collect and manage patient information before a doctor's visit.
 
 ## Usage
 
