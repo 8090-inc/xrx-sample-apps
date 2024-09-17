@@ -1,19 +1,27 @@
-# Patient Information Agent
+# Patient Information App
 
 ## Overview
 
-This project features a reasoning agent designed to gather patient information before a doctor's visit. The agent interacts with patients through a conversational interface, collecting essential details such as name, date of birth, allergies, current medications, and reason for visit. This agent is integrated into the xRx framework, providing a seamless experience for patient intake.
+This project features a reasoning agent designed to gather patient information before a doctor's visit. The agent interacts with patients through a conversational interface, collecting essential details such as name, date of birth, allergies, current medications, and reason for visit. This agent is built on top of the xRx framework, providing a seamless experience for patient intake.
 
 ## Getting Started
 
 ### Prerequisites
+* We assume you have already cloned the repository, as explained in the general README. For the sake of clarity, here's the command again:
+   ```
+   git clone --recursive https://github.com/8090-inc/xrx-sample-apps.git
+   ```
 
-Install Docker, Python3, and Pip3 with homebrew on macOS or apt-get update on Debian/Ubuntu based Linux systems:
+* If the submodule was not installed, or you want to update it, use the following command:
+   ```
+   git submodule update --init --recursive
+   ```
 
-```bash
-brew cask install docker
-brew install python@3.10
-```
+* Install `Docker`, `Python3`, and `Pip3` with [homebrew](https://formulae.brew.sh/) on macOS or `apt-get update` on Debian/Ubuntu based Linux systems:
+    ```bash
+    brew cask install docker
+    brew install python@3.10
+    ```
 
 ## How To Run
 
@@ -26,10 +34,10 @@ brew install python@3.10
 
 2. Run the container:
    ```bash
-   docker run -p 8093:8093 --env-file .env patient-information-agent:latest
+   docker run -p 8003:8003 --env-file .env patient-information-agent:latest
    ```
 
-The agent will be accessible at http://localhost:8093.
+The agent will be accessible at http://localhost:8003.
 
 ### Locally without Docker
 
@@ -50,22 +58,28 @@ The agent will be accessible at http://localhost:8093.
 4. Run the application:
    ```bash
    cd app
-   uvicorn main:app --host 127.0.0.1 --port 8093 --reload
+   uvicorn main:app --host 127.0.0.1 --port 8003 --reload
    ```
 
-The agent will now be running at http://localhost:8093
+The agent will now be running at http://localhost:8003
 
 ## Project Structure
 
-- `app/`: Contains the main application code
-  - `main.py`: FastAPI application setup and endpoint definition
-  - `agent/`: Core agent logic
-  - `executor.py`: Main agent execution logic
-  - `utils/`: Utility functions and LLM integration
-  - `context_manager.py`: Manages session context
-- `requirements.txt`: Python dependencies
-- `Dockerfile`: Docker configuration for containerization
+- `reasoning/`: Contains the main application code
+  - `app/`: backend application folder
+    - `agent/`: agent logic
+      - `context_manager.py`: Manages session context
+      - `executor.py`: Main agent execution logic
+    - `__init__.py`: Initializes the app module
+    - `main.py`: FastAPI application setup and endpoint definition
+  - `Dockerfile`: Docker configuration for containerization
+  - `requirements.txt`: Python dependencies
 - `nextjs-client/`: Next.js frontend for the patient intake application
+- `test/`: Contains test files
+- `xrx-core/`: Core xRx framework (submodule)
+- `docker-compose.yaml`: Docker Compose configuration file
+- `env-example.txt`: Example environment variables file
+- `README.md`: Project documentation
 
 ## API Usage
 
@@ -76,7 +90,7 @@ The agent exposes a single endpoint using FastAPI:
 ### Example request using curl
 
 ```bash
-curl -X POST http://localhost:8093/run-reasoning-agent \
+curl -X POST http://localhost:8003/run-reasoning-agent \
      -H "Content-Type: application/json" \
      -H "Accept: text/event-stream" \
      -d '{
@@ -86,7 +100,7 @@ curl -X POST http://localhost:8093/run-reasoning-agent \
          "messages": [
              {"role": "user", "content": "Hi, I'm here for my appointment."}
          ]
-     }'
+     }
 ```
 
 ### Example request using Python's requests library with streaming
@@ -95,7 +109,7 @@ curl -X POST http://localhost:8093/run-reasoning-agent \
 import requests
 import json
 
-url = "http://localhost:8093/run-reasoning-agent"
+url = "http://localhost:8003/run-reasoning-agent"
 headers = {
     "Content-Type": "application/json",
     "Accept": "text/event-stream",
@@ -159,8 +173,11 @@ The frontend will be available at http://localhost:3000.
 
 Contributions to improve the Patient Information Agent are welcome. Please follow these steps:
 
-1. Fork the repository
-2. Create a new branch for your feature
-3. Commit your changes
-4. Push to your branch
-5. Create a pull request
+1. Open a new issue on GitHub describing the proposed change or improvement
+2. Fork the repository
+3. Create a new branch for your feature
+4. Commit your changes
+5. Push to your branch
+6. Create a pull request, referencing the issue you created
+
+> **Note:** pull requests not backed by published issues will not be considered. This process ensures that all contributions are discussed and aligned with the project's goals before implementation.
