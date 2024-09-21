@@ -13,6 +13,8 @@ const NEXT_PUBLIC_ORCHESTRATOR_PORT = process.env.NEXT_PUBLIC_ORCHESTRATOR_PORT 
 const NEXT_PUBLIC_ORCHESTRATOR_PATH = process.env.NEXT_PUBLIC_ORCHESTRATOR_PATH || "/api/v1/ws";
 const NEXT_PUBLIC_GREETING_FILENAME = process.env.NEXT_PUBLIC_GREETING_FILENAME || "greeting.mp3";
 const NEXT_PUBLIC_UI_DEBUG_MODE = process.env.NEXT_PUBLIC_UI_DEBUG_MODE === "true";
+const TTS_SAMPLE_RATE = process.env.TTS_SAMPLE_RATE || "24000";
+const STT_SAMPLE_RATE = process.env.STT_SAMPLE_RATE || "16000";
 
 export default function Home() {
 
@@ -51,6 +53,8 @@ export default function Home() {
     orchestrator_path: NEXT_PUBLIC_ORCHESTRATOR_PATH,
     greeting_filename: NEXT_PUBLIC_GREETING_FILENAME,
     orchestrator_ssl: false,
+    stt_sample_rate: parseInt(STT_SAMPLE_RATE, 10),
+    tts_sample_rate: parseInt(TTS_SAMPLE_RATE, 10),
   });
 
   const [message, setMessage] = useState('');
