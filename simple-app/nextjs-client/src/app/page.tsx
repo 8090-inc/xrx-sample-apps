@@ -136,29 +136,24 @@ export default function Home() {
   }
 
   return (
-    <main className="mainContainer">
-      {showStartButton && (
-        <div className="startButtonContainer">
-          <button className="widget-button" style={{padding: '10px 30px'}} onClick={handleStartClick}>Start</button>
-        </div>
-      )}
-      <div className="title flex-none">
-        xRx Demo
-      </div>      
-      <div className="chatContainer flex-auto">
-        <div className={`iconContainer flex ${!isVoiceMode ? 'hidden' : ''}`}>
-          <SyncLoader
-                  color={"#F15950"}
-                  loading={isAgentSpeaking}
-                  size={20}
-                  />
-          <PulseLoader
-              color={"#F15950"}
-              loading={!isAgentSpeaking && isAgentThinking}
-              size={20}
-              />
-
-          <div style={{
+    <main className="mainContainer" style={{ paddingTop: '2rem' }}>
+      {/* Move iconContainer here */}
+      <div
+        className={`iconContainer flex ${!isVoiceMode ? 'hidden' : ''}`}
+        style={{ marginTop: '2rem' }}
+      >
+        <SyncLoader
+          color={"#F15950"}
+          loading={isAgentSpeaking}
+          size={20}
+        />
+        <PulseLoader
+          color={"#F15950"}
+          loading={!isAgentSpeaking && isAgentThinking}
+          size={20}
+        />
+        <div
+          style={{
             width: isAgentSpeaking || isAgentThinking ? '0px' : '50px',
             height: isAgentSpeaking || isAgentThinking ? '0px' : '50px',
             borderRadius: '50%',
@@ -169,9 +164,54 @@ export default function Home() {
             top: '40',
             transform: isAgentSpeaking || isAgentThinking ? 'translate(-50%, 0) scale(0)' : 'translate(-50%, 0) scale(1)',
             transformOrigin: 'center center'
-          }}></div>
-          
+          }}
+        ></div>
+      </div>
+
+      <div className="contentContainer">
+        <div className="title flex-none">
+          <h1>The Simple App</h1>
+          <p className="subtitle">
+            With the simple app, you can check the latest stock prices and what's the weather like around the world
+          </p>
         </div>
+        <div className="bentoGrid">
+          <div className="gridItem">
+            <Image
+              src="/weather.svg"
+              alt="Weather Icon"
+              width={70}
+              height={70}
+              className="iconImage"
+            />
+            <p>"What's the weather like in Menlo Park?"</p>
+          </div>
+          <div className="gridItem">
+            <Image
+              src="/stock_news.svg"
+              alt="Stock News Icon"
+              width={70}
+              height={70}
+              className="iconImage"
+            />
+            <p>"What did Apple stock do today?"</p>
+          </div>
+        </div>
+      </div>
+
+      {showStartButton && (
+        <div className="startButtonContainer">
+          <button
+            className="widget-button"
+            style={{ padding: '10px 30px' }}
+            onClick={handleStartClick}
+          >
+            Start
+          </button>
+        </div>
+      )}
+
+      <div className="chatContainer flex-auto" style={{ minHeight: '50vh', display: 'flex', flexDirection: 'column' }}>
         <div ref={messagesEndRef} />
         {
           isVoiceMode ?
@@ -208,7 +248,7 @@ export default function Home() {
             ))
         }
       </div>
-      <div className='inputContainer'>
+      <div className='inputContainer' style={{ marginTop: 'auto' }}>
         <div className='flex'>
           {
             isVoiceMode ?
