@@ -11,7 +11,6 @@ import xRxClient, { ChatMessage } from "../../../xrx-core/react-xrx-client/src";
 import styles from "./Home.module.css";
 import WelcomeScreen from "./components/welcome-screen/WelcomeScreen";
 
-import PreInteractionComponent from "./components/pre-interaction-widget/PreInteractionComponent";
 import PatientIntakeForm from "./components/patient-intake-form/PatientIntakeForm";
 import ChatWindow from "./components/chat-window/ChatWindow";
 
@@ -129,8 +128,6 @@ export default function Home() {
       
       if (widget.type === "patient-information") {
         return <PatientIntakeForm details={details} />;
-      } else if (widget.type === "pre-interaction") {
-        return <PreInteractionComponent agentType={"patient-information-agent"} />;
       } else {
         return null;
       }
