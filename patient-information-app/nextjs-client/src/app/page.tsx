@@ -79,18 +79,6 @@ export default function Home() {
     tts_sample_rate: parseInt(TTS_SAMPLE_RATE, 10),
   });
 
-
-
-  const recordingContextRef = useRef<AudioContext | null>(null);
-  const playbackContextRef = useRef<AudioContext | null>(null);
-  const incomingAudioBufferRef = useRef<ArrayBuffer[]>([]);
-  const isPlayingAudioRef = useRef(false);
-
-  const [isSpeechDetected, setIsSpeechDetected] = useState(false);
-  const isSpeechDetectedRef = useRef(false);
-
-  const audioWorkletNodeRef = useRef<AudioWorkletNode | null>(null);
-  const mediaStreamRef = useRef<MediaStream | null>(null);
   const [message, setMessage] = useState("");
 
   const [latestWidget, setLatestWidget] = useState<{
@@ -238,7 +226,7 @@ export default function Home() {
           >
             {" "}
             <div className={styles.listeningIndicatorContainer}>
-              {isSpeechDetected && (
+              {isUserSpeaking && (
                 <motion.div
                   className={styles.listeningIndicator}
                   initial={{ scaleY: 0 }}
