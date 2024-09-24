@@ -106,3 +106,7 @@ The workflow has debug logging enabled. Check the workflow run logs in the GitHu
 ## Project Structure
 
 Ensure each subdirectory that should be built has a valid `docker-compose.yml` file.
+
+## Updates
+
+- 2024-09-23: We are temporarily removing the guardrails proxy and reasoning service from the docker compose setup, due to breaking changes from guardrailsai. 
