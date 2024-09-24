@@ -7,11 +7,14 @@ This repository contains the reasoning applications built on top of the xRx fram
 
 The reasoning systems process input, generate responses and manage the overall conversation flow within the xRx framework. Each subdirectory in this folder represents a different application, including a specific reasoning agent and an UI.
 
+> **Documentation.** Check out the full documentation [here](https://8090-inc.github.io/xrx-core/).
+
 ## Available Reasoning Applications
 1. [Simple App](./simple-app): A simple template for creating custom reasoning apps.
-2. [Shopify App](./shopify-app): An app designed to handle app-based interactions with a Shopify store.
-3. [Wolfram Assistant App](./wolfram-assistant-app): An app designed to handle math and physics-based interactions.
-4. [Patient Information App](./patient-information-app): An app designed to collect and manage patient information before a doctor's visit.
+2. [Pizza Store](./pizza-store): An app designed to handle app-based interactions with a Pizza Store.
+3. [Shopify App](./shopify-app): An app designed to handle app-based interactions with a Shopify store.
+4. [Wolfram Assistant App](./wolfram-assistant-app): An app designed to handle math and physics-based interactions.
+5. [Patient Information App](./patient-information-app): An app designed to collect and manage patient information before a doctor's visit.
 
 ## Usage
 To get started with xRx, follow these steps:
@@ -52,3 +55,61 @@ We welcome contributions to the xRx framework and its sample applications. If yo
 6. Create a pull request, referencing the issue you created
 
 > **Note:** Pull requests not backed by published issues will not be considered. This process ensures that all contributions are discussed and aligned with the project's goals before implementation.
+
+## GitHub Actions Workflow
+
+This project uses a GitHub Actions workflow to automatically build and test Docker Compose projects in each subdirectory of the repository.
+
+### Workflow Details
+
+The workflow is defined in `.github/workflows/build-docker-compose.yml` and does the following:
+
+1. Triggers on:
+   - Push to `main` or `test-workflow` branches
+   - Pull requests to `main` branch
+   - Manual dispatch
+
+2. For each subdirectory in the repository root:
+   - Builds the Docker Compose project
+   - Starts the containers
+   - Stops and removes the containers
+
+### Testing the Workflow
+
+To test the GitHub Actions workflow:
+
+1. **Push to test-workflow branch**: Make changes and push to the `test-workflow` branch to trigger the workflow.
+
+2. **Create a Pull Request**: Open a PR to the `main` branch to trigger the workflow.
+
+3. **Manual Trigger**: 
+   - Go to the Actions tab in the GitHub repository
+   - Select "Build Docker Compose Projects" workflow
+   - Click "Run workflow" and select the branch to run on
+
+4. **Local Testing with Act**:
+   If you have [Act](https://github.com/nektos/act) installed, you can test locally:
+   ```
+   act push
+   ```
+
+### Workflow Configuration
+
+The workflow uses the following Docker Compose flags:
+- `--build`: Build images before starting containers
+- `--no-cache`: Do not use cache when building images
+- `--force-recreate`: Recreate containers even if their configuration hasn't changed
+- `--renew-anon-volumes`: Recreate anonymous volumes
+- `--remove-orphans`: Remove containers for services not defined in the Compose file
+
+### Debugging
+
+The workflow has debug logging enabled. Check the workflow run logs in the GitHub Actions tab for detailed output.
+
+## Project Structure
+
+Ensure each subdirectory that should be built has a valid `docker-compose.yml` file.
+
+## Updates
+
+- 2024-09-23: We are temporarily removing the guardrails proxy and reasoning service from the docker compose setup, due to breaking changes from guardrailsai. 
