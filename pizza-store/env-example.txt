@@ -44,12 +44,12 @@ DG_API_KEY="your_deepgram_api_key"  # required if you want to use Deepgram
 # - Deepgram: https://deepgram.com/
 # - OpenAI: https://openai.com/
 # Deepgram configuration
-DG_TTS_MODEL_VOICE="aura-asteria-en"
-DG_API_KEY="your_deepgram_api_key"
+# DG_TTS_MODEL_VOICE="aura-asteria-en"
+# DG_API_KEY="your_deepgram_api_key"
 # OpenAI configuration
-OPENAI_API_KEY="your_openai_api_key"
-OPENAI_TTS_MODEL="tts-1"
-OPENAI_TTS_VOICE="alloy"
+# OPENAI_API_KEY="your_openai_api_key"
+# OPENAI_TTS_MODEL="tts-1"
+# OPENAI_TTS_VOICE="alloy"
 # CACHE_DIR="your_cache_directory_path"
 
 
