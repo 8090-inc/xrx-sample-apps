@@ -11,7 +11,6 @@ import xRxClient, { ChatMessage } from "../../../xrx-core/react-xrx-client/src";
 import styles from "./Home.module.css";
 import WelcomeScreen from "./components/welcome-screen/WelcomeScreen";
 
-import PreInteractionComponent from "./components/pre-interaction-widget/PreInteractionComponent";
 import PatientIntakeForm from "./components/patient-intake-form/PatientIntakeForm";
 import ChatWindow from "./components/chat-window/ChatWindow";
 
@@ -37,6 +36,7 @@ const skinConfig = SkinConfigurations["patient-information-agent"];
 
 // Change this line near the top of the file
 const TTS_SAMPLE_RATE = process.env.TTS_SAMPLE_RATE || "24000";
+const STT_SAMPLE_RATE = process.env.STT_SAMPLE_RATE || "16000";
 
 export default function Home() {
 
@@ -75,6 +75,8 @@ export default function Home() {
     orchestrator_path: NEXT_PUBLIC_ORCHESTRATOR_PATH,
     greeting_filename: NEXT_PUBLIC_GREETING_FILENAME,
     orchestrator_ssl: false,
+    stt_sample_rate: parseInt(STT_SAMPLE_RATE, 10),
+    tts_sample_rate: parseInt(TTS_SAMPLE_RATE, 10),
   });
 
 
@@ -126,8 +128,6 @@ export default function Home() {
       
       if (widget.type === "patient-information") {
         return <PatientIntakeForm details={details} />;
-      } else if (widget.type === "pre-interaction") {
-        return <PreInteractionComponent agentType={"patient-information-agent"} />;
       } else {
         return null;
       }

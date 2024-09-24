@@ -5,3 +5,6 @@ python-dotenv==1.0.1
 langsmith==0.1.92
 langfuse==2.39.2
 redis==5.0.7
+llama-index==0.10.56
+llama-index-llms-groq==0.1.4
+networkx==3.3
