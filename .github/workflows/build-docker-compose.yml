@@ -1,0 +1,53 @@
+name: Build Docker Compose Projects
+
+on:
+  push:
+    branches: [ main, test-workflow ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  get-project-list:
+    runs-on: ubuntu-latest
+    outputs:
+      projects: ${{ steps.dir-list.outputs.directories }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'  # Add this line to checkout submodules
+
+      - name: Get list of directories
+        id: dir-list
+        run: echo "directories=$(ls -d */ | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+
+  build-project:
+    needs: get-project-list
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ${{fromJson(needs.get-project-list.outputs.projects)}}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'  # Add this line to checkout submodules
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and test ${{ matrix.project }}
+      run: |
+        echo "Building ${{ matrix.project }}"
+        cd ${{ matrix.project }}
+        echo "Contents of ${{ matrix.project }}:"
+        ls -la
+        echo "Running docker-compose up"
+        docker-compose up --build --no-cache --force-recreate --renew-anon-volumes --remove-orphans
+        echo "Running docker-compose down"
+        docker-compose down --volumes --remove-orphans
+        cd ..
+      env:
+        ACTIONS_STEP_DEBUG: true
