@@ -28,8 +28,8 @@
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
-  width: 100%;
-  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 @layer utilities {
@@ -66,14 +66,9 @@ td {
 }
 
 .iconContainer {
-  position: fixed;
-  top: 30px;
-  left: 0;
-  right: 0;
   background: var(--header-gradient);
   justify-content: center;
-  height: 150px;
-  padding: 30px;
+  padding: 15px;
 }
 
 .icon {
@@ -115,33 +110,68 @@ td {
 .mainContainer {
   display: flex;
   flex-direction: column;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  position: fixed;
+  min-height: 100vh;
   background-color: rgb(var(--background-rgb));
+  padding: 0;
 }
 
 .title {
   text-align: center;
+  margin-bottom: 20px;
   background: var(--header-gradient);
   padding-top: 0.5em;
   padding-bottom: 0.8em;
+  margin-top: 1em;  /* Add margin-top for spacing below iconContainer */
 }
 
+.title h1 {
+  font-size: 2em;
+  margin-bottom: 0.2em;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: gray;
+  width: 50%;      /* Set width to 50% */
+  margin: 0 auto;  /* Center horizontally */
+}
+
+.bentoGrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  margin-top: 1em;
+}
+
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 200px;
+  text-align: center;
+  border: 1px solid grey; /* Grey border */
+  padding: 1em;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out;
+  margin-top: 10px;     /* Add 10px top margin */
+  margin-bottom: 20px;  /* Add 20px bottom margin */
+}
+
+.gridItem p {
+  margin-top: 0.5em;
+  font-size: 1em;
+}
 
 .chatMessageContainer {
   padding-top:10px;
 }
 
 .chatContainer {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  overflow-y: scroll;
+  flex: 1;
+  overflow-y: auto;
   overflow-x: hidden;
-  margin-bottom: 120px;
+  margin-bottom: 120px; /* Height of the inputContainer */
   padding-left: 10px;
   padding-right: 10px;
   background-color: rgb(var(--background-rgb));
@@ -152,10 +182,11 @@ td {
   background-color: var(--background-start-rgb);
   padding: 0.625em;
   position: fixed;
-  left:0;
-  bottom:0;
-  right:0;
-  height: 120px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 80px; /* Reduced height */
+  z-index: 1000;
 }
 
 .textInputBox {
@@ -336,14 +367,40 @@ td {
 }
 
 .startButtonContainer {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
 }
-.startButton {
-  padding: 10px 20px;
-  font-size: 20px;
-  cursor: pointer;
+
+/* Center the content vertically and horizontally */
+.contentContainer {
+  flex: 1; /* Allow it to grow and fill space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 0;
+}
+
+/* Make SVG icons white */
+.iconImage {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .iconImage {
+    filter: invert(1);
+    /* In dark mode, invert the icons to appear white */
+  }
+}
+
+/* Add transition for smooth scaling */
+.gridItem {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Apply scale on hover */
+.gridItem:hover {
+  transform: scale(1.05);
 }
