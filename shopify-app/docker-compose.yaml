@@ -61,17 +61,17 @@ services:
     networks:
       - xrx_network
 
-  xrx-guardrails:
-    container_name: xrx-guardrails
-    build:
-      context: ./xrx-core/guardrails-proxy
-      dockerfile: Dockerfile
-    ports:
-      - 8004:8004
-    env_file:
-      - .env
-    networks:
-      - xrx_network
+  # xrx-guardrails:
+  #   container_name: xrx-guardrails
+  #   build:
+  #     context: ./xrx-core/guardrails-proxy
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8004:8004
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - xrx_network
 
   xrx-redis:
     image: "redis:alpine"

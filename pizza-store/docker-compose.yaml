@@ -1,0 +1,86 @@
+services:
+  xrx-client:
+    container_name: xrx-client
+    build:
+      context: .
+      dockerfile: nextjs-client/Dockerfile
+      args:
+        NEXT_PUBLIC_AGENT: ${NEXT_PUBLIC_AGENT}
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    networks:
+      - xrx_network
+
+  xrx-orchestrator:
+    container_name: xrx-orchestrator
+    build:
+      context: ./xrx-core/orchestrator
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    networks:
+      - xrx_network
+
+  xrx-reasoning:
+    container_name: xrx-reasoning
+    build:
+      context: .
+      dockerfile: reasoning/Dockerfile
+    ports:
+      - 8003:8003
+    env_file:
+      - .env
+    networks:
+      - xrx_network
+
+  xrx-stt:
+    container_name: xrx-stt
+    build:
+      context: ./xrx-core/stt
+      dockerfile: Dockerfile
+    ports:
+      - 8001:8001
+    env_file:
+      - .env
+    networks:
+      - xrx_network
+
+  xrx-tts:
+    container_name: xrx-tts
+    build:
+      context: ./xrx-core/tts
+      dockerfile: Dockerfile
+    ports:
+      - 8002:8002
+    env_file:
+      - .env
+    networks:
+      - xrx_network
+
+  # xrx-guardrails:
+  #   container_name: xrx-guardrails
+  #   build:
+  #     context: ./xrx-core/guardrails-proxy
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8004:8004
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - xrx_network
+
+  xrx-redis:
+    image: "redis:alpine"
+    container_name: xrx-redis
+    ports:
+      - 6379:6379
+    networks:
+      - xrx_network
+
+networks:
+  xrx_network:
+    driver: bridge

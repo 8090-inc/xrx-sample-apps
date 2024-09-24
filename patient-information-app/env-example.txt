@@ -17,7 +17,7 @@ GROQ_STT_API_KEY="your_groq_api_key_here"
 # === Text-to-Speech (TTS) Configuration ===
 TTS_PROVIDER="elevenlabs"       # Alternative providers: "deepgram", "openai", "cartesia"
 ELEVENLABS_API_KEY="your_elevenlabs_api_key"
-ELEVENLABS_VOICE_ID="tnSpp4vdxKPjI9w0GnoV"
+ELEVENLABS_VOICE_ID="your_elevenlabs_voice_id"
 
 
 # =============================================
@@ -29,26 +29,28 @@ INITIAL_RESPONSE="Hello! How can I help you?"
 
 # === Speech-to-Text (STT) Configuration ===
 DG_API_KEY="your_deepgram_api_key"  # required if you want to use Deepgram
+# STT_SAMPLE_RATE="16000"
 
 # === Text-to-Speech (TTS) Configuration ===
 # Get your API keys from the following URLs:
 # - Deepgram: https://deepgram.com/
 # - OpenAI: https://openai.com/
+# TTS_SAMPLE_RATE="24000"
 # Deepgram configuration
-DG_TTS_MODEL_VOICE="aura-asteria-en"
-DG_API_KEY="your_deepgram_api_key"
+# DG_TTS_MODEL_VOICE="aura-asteria-en"
+# DG_API_KEY="your_deepgram_api_key"
 # OpenAI configuration
-OPENAI_API_KEY="your_openai_api_key"
-OPENAI_TTS_MODEL="tts-1"
-OPENAI_TTS_VOICE="alloy"
+# OPENAI_API_KEY="your_openai_api_key"
+# OPENAI_TTS_MODEL="tts-1"
+# OPENAI_TTS_VOICE="alloy"
 # CACHE_DIR="your_cache_directory_path"
 
 
 # === Guardrails Proxy Configuration ===
-AGENT_HOST="xrx-guardrails"
-AGENT_PORT="8004"
-GUARDRAILS_AGENT_HOST="xrx-reasoning"
-GUARDRAILS_AGENT_PORT="8003"
+# AGENT_HOST="xrx-guardrails"
+# AGENT_PORT="8004"
+# GUARDRAILS_AGENT_HOST="xrx-reasoning"
+# GUARDRAILS_AGENT_PORT="8003"
 
 # === LLM Observability Configuration ===
 LLM_OBSERVABILITY_LIBRARY="none"

@@ -1,6 +1,6 @@
-# xRx Voice AI Assistant
+# xRx UI
 
-This demo application allows users to record audio, send it to a backend, receive audio responses via WebSocket, and play the received audio. Additionally, it includes a chat interface and a feature to fetch and render markdown data from a backend.
+This folder contains the UI logic and components of the application. Most of the shared UI components are imported from the `react-xrx-client` library that is part of the `xrx-core` submodule.
 
 ## Getting Started
 
@@ -12,12 +12,6 @@ Install `Docker`, `Nodejs`, `npm` with [homebrew](https://formulae.brew.sh/) on 
 brew install node@18
 ```
 
-Then set the following environment variable in the `.env` file:
-
-```bash
-# For the patient information agent
-NEXT_PUBLIC_AGENT="patient-information-agent" ### YOU DO NOT NEED THIS!!!! AAAAAAAAAA
-```
 
 ### IDE Setup
 
