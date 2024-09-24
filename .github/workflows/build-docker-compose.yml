@@ -51,10 +51,8 @@ jobs:
         cp env-example.txt .env
         echo "Contents of ${{ matrix.project }}:"
         ls -la
-        echo "Running docker-compose up"
-        docker-compose up --build --force-recreate --renew-anon-volumes --remove-orphans
-        echo "Running docker-compose down"
-        docker-compose down --volumes --remove-orphans
+        echo "Running docker-compose build"
+        docker-compose build --no-cache
         cd ..
       env:
         ACTIONS_STEP_DEBUG: true
