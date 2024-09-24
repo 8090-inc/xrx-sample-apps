@@ -7,11 +7,14 @@ This repository contains the reasoning applications built on top of the xRx fram
 
 The reasoning systems process input, generate responses and manage the overall conversation flow within the xRx framework. Each subdirectory in this folder represents a different application, including a specific reasoning agent and an UI.
 
+> **Documentation.** Check out the full documentation [here](8090-inc.github.io/xrx-core/).
+
 ## Available Reasoning Applications
 1. [Simple App](./simple-app): A simple template for creating custom reasoning apps.
-2. [Shopify App](./shopify-app): An app designed to handle app-based interactions with a Shopify store.
-3. [Wolfram Assistant App](./wolfram-assistant-app): An app designed to handle math and physics-based interactions.
-4. [Patient Information App](./patient-information-app): An app designed to collect and manage patient information before a doctor's visit.
+2. [Pizza Store](./pizza-store): An app designed to handle app-based interactions with a Pizza Store.
+3. [Shopify App](./shopify-app): An app designed to handle app-based interactions with a Shopify store.
+4. [Wolfram Assistant App](./wolfram-assistant-app): An app designed to handle math and physics-based interactions.
+5. [Patient Information App](./patient-information-app): An app designed to collect and manage patient information before a doctor's visit.
 
 ## Usage
 To get started with xRx, follow these steps:
