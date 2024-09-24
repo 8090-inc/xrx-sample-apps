@@ -7,7 +7,7 @@ This repository contains the reasoning applications built on top of the xRx fram
 
 The reasoning systems process input, generate responses and manage the overall conversation flow within the xRx framework. Each subdirectory in this folder represents a different application, including a specific reasoning agent and an UI.
 
-> **Documentation.** Check out the full documentation [here](8090-inc.github.io/xrx-core/).
+> **Documentation.** Check out the full documentation [here](https://8090-inc.github.io/xrx-core/).
 
 ## Available Reasoning Applications
 1. [Simple App](./simple-app): A simple template for creating custom reasoning apps.
