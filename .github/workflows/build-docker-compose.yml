@@ -48,6 +48,7 @@ jobs:
       run: |
         echo "Building ${{ matrix.project }}"
         cd ${{ matrix.project }}
+        cp env-example.txt .env
         echo "Contents of ${{ matrix.project }}:"
         ls -la
         echo "Running docker-compose up"
