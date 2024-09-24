@@ -51,7 +51,7 @@ jobs:
         echo "Contents of ${{ matrix.project }}:"
         ls -la
         echo "Running docker-compose up"
-        docker-compose up --build --no-cache --force-recreate --renew-anon-volumes --remove-orphans
+        docker-compose up --build --force-recreate --renew-anon-volumes --remove-orphans
         echo "Running docker-compose down"
         docker-compose down --volumes --remove-orphans
         cd ..
