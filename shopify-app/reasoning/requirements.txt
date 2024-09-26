@@ -9,4 +9,4 @@ langsmith==0.1.92
 langfuse==2.39.2
 networkx==3.3
 redis==5.0.7
-
+-e ../xrx-core/agent_framework_pip
