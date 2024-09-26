@@ -4,7 +4,7 @@ import asyncio
 import logging
 import json
 import asyncio
-from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
+from xrx_agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
 import openai
 from agent.config import store_info, customer_service_task
 

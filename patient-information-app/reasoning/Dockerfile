@@ -2,7 +2,7 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY xrx-core/agent_framework_pip /xrx-core/agent_framework_pip
+COPY xrx-core/xrx_agent_framework /xrx-core/xrx_agent_framework
 
 COPY reasoning/requirements.txt requirements.txt
 RUN pip install -r requirements.txt

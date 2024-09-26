@@ -2,7 +2,7 @@ from ..base import Node
 import logging
 import os
 import json
-from agent_framework import observability_decorator
+from xrx_agent_framework import observability_decorator
 from agent.utils.shopify import (
     populate_images_for_product_list,
     populate_images_for_product_details,

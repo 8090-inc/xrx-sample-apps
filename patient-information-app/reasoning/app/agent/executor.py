@@ -4,7 +4,7 @@ import os
 import logging
 import redis
 
-from agent_framework import initialize_llm_client, observability_decorator
+from xrx_agent_framework import initialize_llm_client, observability_decorator
 from .context_manager import set_session, session_var
 
 # set up the redis client
