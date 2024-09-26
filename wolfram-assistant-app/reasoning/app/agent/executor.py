@@ -1,7 +1,7 @@
 from typing import List, Dict
 import json
 import logging
-from agent_framework import initialize_llm_client, observability_decorator
+from xrx_agent_framework import initialize_llm_client, observability_decorator
 
 import os
 from .tools import generic_tools

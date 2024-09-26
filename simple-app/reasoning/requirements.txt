@@ -10,4 +10,4 @@ langfuse==2.39.2
 geopy
 yfinance
 redis==5.0.7
-
+-e ../xrx-core/xrx_agent_framework

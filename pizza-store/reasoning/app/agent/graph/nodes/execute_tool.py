@@ -3,7 +3,7 @@ import asyncio
 import logging
 import json
 from agent.config import tools_dict, tool_param_desc
-from agent_framework import observability_decorator
+from xrx_agent_framework import observability_decorator
 import copy
 
 # Configure logger

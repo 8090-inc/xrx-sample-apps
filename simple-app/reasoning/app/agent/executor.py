@@ -6,7 +6,7 @@ import logging
 import inspect
 
 from .tools.generic_tools import get_current_weather, get_current_time, get_stock_price
-from agent_framework import initialize_llm_client, observability_decorator
+from xrx_agent_framework import initialize_llm_client, observability_decorator
 
 client = initialize_llm_client()
 MODEL = os.environ['LLM_MODEL_ID']

@@ -3,7 +3,7 @@ import os
 import asyncio
 import logging
 import json
-from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
+from xrx_agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
 from agent.config import tools_dict, tool_param_desc
 import openai
 from datetime import datetime, timedelta
