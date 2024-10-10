@@ -3,8 +3,9 @@ import asyncio
 import logging
 import json
 from agent.config import tools_dict, tool_param_desc
-from agent_framework import observability_decorator
+from agent_framework import observability_decorator, StateMachine
 import copy
+import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -20,14 +21,25 @@ class ExecuteTool(Node):
             logger.info(f"ExecuteTool is executing input {input}")
             tool = input.get('tool','')
             tool_arguments = input.get('parameters',{})
-            tool_response = tools_dict[tool].call(**tool_arguments)
+
+            if (tool.startswith('state_transition')):
+                new_state = tool.split('_')[2]
+                StateMachine.executeStateTransition(input['memory'], new_state)
+                tool_call_output = f"Transitioned to state '{new_state}'"
+            elif (tool.startswith('flow_transition')):
+                new_flow = tool.split('_')[2]
+                StateMachine.executeFlowTransition(input['memory'], new_flow)
+                tool_call_output = f"Transitioned to flow '{new_flow}'"
+            else:
+                tool_response = tools_dict[tool].call(**tool_arguments)
             
-            try:
-                tool_call_output = json.loads(tool_response.content)
-            except json.JSONDecodeError:
-                tool_call_output = tool_response.content
+                try:
+                    tool_call_output = json.loads(tool_response.content)
+                except json.JSONDecodeError:
+                    tool_call_output = tool_response.content
 
             await asyncio.sleep(0)
+
             yield {
                 'node': self.id,
                 'reason': 'Output of tool',

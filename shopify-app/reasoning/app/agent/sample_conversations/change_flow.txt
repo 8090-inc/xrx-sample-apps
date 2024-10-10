@@ -1,0 +1,767 @@
+(myenv) mprast@Matthews-MacBook-Pro test % python interactive_test.py
+Interactive Shopify Agent Test. Type 'quit' to exit.
+================================================================================
+Customer: hello
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user initiated a conversation with a greeting. My current objective as defined by the state of the state machine is to determine which flow the user 
+should enter into next. Is the user's question related to the current objective? False. Has the objective of the current state been met? False. The previous tool calls accomplished nothing. Based on these
+previous tool calls and all available information, I am choosing to ask the user about their intent."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': '\n\n### Audio Response to Customer\n\nHow can I assist you today?'}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'How can I assist you today?',
+    'reason': "To address the customer's greeting. The information provided does not indicate a specific inquiry. The customer can see the blank screen. My current objective as defined by the state of the
+state machine is to determine which flow the user should enter into next. Is the user's question related to the current objective? false. Has the objective of the current state been met? false. The tool 
+outputs are missing information to answer the customer's inquiry. Based on the tool outputs, I will ask the customer about their needs."
+}
+================================================================================
+Customer: I'd like to buy something
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-flow',
+    'reason': "The historical conversation showed the user greeted and expressed interest in buying something. My current objective as defined by the state of the state machine is to determine which flow 
+the user should enter into next. Is the user's question related to the current objective? True. Has the objective of the current state been met? False. The previous tool calls accomplished none. Based on 
+these previous tool calls and all available information, I am choosing to transition to the buying flow as the user has shown interest in purchasing an item."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me see what I can find for you.',
+    'reason': "The customer has initiated a purchase and I'm preparing to assist them."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'flow_transition_buying',
+    'reason': 'My current objective as defined by the state of the state machine is to Determine which flow the user should enter into next. The objective of the current state has been met. Based on the 
+context of my conversation with the customer, I am choosing to transition to buying.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to flow 'buying'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_buying: Calling flow transition with no input returned transitioned to flow 'buying'. The user has expressed their
+intention to buy something.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling flow transition with no input returned transitioned to flow 'buying'. The user has expressed their intention to buy something.",
+    'reason': "The tool call result indicates a transition to the buying flow, and based on the conversation context, it is a response to the user's intention to make a purchase."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_buying: Calling flow transition with no input returned transitioned to flow 'buying'. The user has expressed their
+intention to buy something.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user's intention to buy something. My current objective as defined by the state of the state machine is to ask the user for the details of the product
+they want to purchase. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The previous tool calls accomplished transitioning to the 
+buying flow. Based on these previous tool calls and all available information, I am choosing to ask the user for the product details."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_buying: Calling flow transition with no input returned transitioned to flow 'buying'. The user has expressed their
+intention to buy something.\n\n\n### Audio Response to Customer\n\nWhat can I help you find today?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'What can I help you find today?',
+    'reason': "To address the customer's intention to buy something. The information provided by the tools tells me the user has expressed their intention to buy something. The customer is able to see the
+transition to the buying flow. My current objective as defined by the state of the state machine is to ask the user for the details of the product they want to purchase. Is the user's question related to 
+the current objective? true. Has the objective of the current state been met? false. The tool outputs are missing the specific product the customer wants to purchase. Based on the tool outputs, I will 
+give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: snowboards 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user initiated a purchase and wants to buy something. My current objective as defined by the state of the state machine is to ask the user for the 
+details of the product they want to purchase. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The previous tool calls accomplished 
+transitioning to the buying flow. Based on these previous tool calls and all available information, I am choosing to respond to the customer because the user wants to find a specific product."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': '\n\n### Audio Response to Customer\n\nWhat kind of snowboard are you looking for?'}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'What kind of snowboard are you looking for?',
+    'reason': "To address the customer's inquiry about snowboards. The information provided by the tools tells me the customer has expressed their intention to buy something. I called the 
+flow_transition_buying tool and transitioned to the 'buying' flow. The customer is able to see that I asked what they want to find today. My current objective as defined by the state of the state machine 
+is to ask the user for the details of the product they want to purchase. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The tool 
+outputs are missing specific product details to answer the customer's inquiry. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: actually wait, I'd like to submit something to be listed on the store
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-flow',
+    'reason': "The historical conversation showed the user initially wanted to buy something, but later changed their mind to submit a new item to be listed on the store. My current objective as defined 
+by the state of the state machine is to help the user select and purchase an item from the store. Is the user's question related to the current objective? false. Has the objective of the current state 
+been met? false. The previous tool calls accomplished transition to the buying flow. Based on these previous tool calls and all available information, I am choosing to transition to the submitting flow 
+because the user wants to submit a new item to be listed on the store."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me switch gears for you.',
+    'reason': "I chose this waiting message because the customer has changed their mind from buying something to submitting an item to be listed on the store, so I'm acknowledging the shift in request and
+letting them know I'm working on it."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'flow_transition_submitting',
+    'reason': "My current objective as defined by the state of the state machine is to help the user select and purchase an item from the store. The user has changed their intention and wants to submit a 
+new item to be listed in the store's catalog. Based on the context of my conversation with the customer, I am choosing to transition to the 'submitting' flow."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to flow 'submitting'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_submitting: Calling flow transition with no input returned transitioned to flow 'submitting'. The user has changed
+their intention from buying to submitting a product to be listed on the store.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling flow transition with no input returned transitioned to flow 'submitting'. The user has changed their intention from buying to submitting a product to be listed on the store.",
+    'reason': "The tool 'flow_transition_submitting' was called to transition the flow to the submitting stage."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_submitting: Calling flow transition with no input returned transitioned to flow 'submitting'. The user has changed
+their intention from buying to submitting a product to be listed on the store.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user initially wanted to buy something but then changed their mind to submit a product to be listed on the store. My current objective as defined by 
+the state of the state machine is to ask the user for the details of the product they want to submit to the store's catalog. Is the user's question related to the current objective? true. Has the 
+objective of the current state been met? false. The previous tool calls accomplished transitioning to the 'submitting' flow. Based on these previous tool calls and all available information, I am choosing
+to respond to the customer."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_submitting: Calling flow transition with no input returned transitioned to flow 'submitting'. The user has changed
+their intention from buying to submitting a product to be listed on the store.\n\n\n### Audio Response to Customer\n\nWhat's the product you'd like to submit to our catalog?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "What's the product you'd like to submit to our catalog?",
+    'reason': "To address the customer's inquiry about submitting a product to the store's catalog. The information provided by the tools tells me that the user has changed their intention from buying to 
+submitting a product to be listed on the store. The customer is able to see the transition to the submitting flow. My current objective as defined by the state of the state machine is to collect the 
+details of the product the user wants to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The tool 
+outputs are missing the product details to answer the customer's inquiry. Based on the tool outputs, I will give the customer a factually grounded response which says "
+}
+================================================================================
+Customer: oranges
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a product to be listed in the store's catalog. My current objective as defined by the state of the state machine is to ask the 
+user for the details of the product they want to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The 
+previous tool calls accomplished transitioning to the submitting flow. Based on these previous tool calls and all available information, I am choosing to ask the user for more details about the product."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': '\n\n### Audio Response to Customer\n\nWhat kind of oranges would you like to submit? Are they organic, conventional, or something else?'}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'What kind of oranges would you like to submit? Are they organic, conventional, or something else?',
+    'reason': "To address the customer's intention to submit a product to the store's catalog. The information provided by the tools tells me the customer has changed their intention from buying to 
+submitting a product. The customer is able to see the last tool call output. My current objective as defined by the state of the state machine is to collect the details of the product they want to submit 
+to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The tool outputs are missing details about the product to 
+answer the customer's inquiry. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: organic sumo oranges
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a product to be listed on the store's catalog. My current objective as defined by the state of the state machine is to collect 
+the product details. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The previous tool calls accomplished transitioning to the 
+'submitting' flow. Based on these previous tool calls and all available information, I am choosing to ask more questions to get the product details."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': "\n\n### Audio Response to Customer\n\nCan you tell me a bit more about the organic Sumo oranges you'd like to submit, like the price and weight?"}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "Can you tell me a bit more about the organic Sumo oranges you'd like to submit, like the price and weight?",
+    'reason': "To address the customer's submission of organic Sumo oranges to the store's catalog. The information provided by the tools tells me that the customer has expressed their intention to submit
+a product to the store's catalog. The customer is able to see the output from the last tool call. My current objective as defined by the state of the state machine is to collect the details of the product
+the user wants to submit to the store's catalog. Is the user's question related to the current objective? True. Has the objective of the current state been met? False. The tool outputs are missing the 
+details of the product. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: 30 bushels, $60 a bushel
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a product to the store's catalog. My current objective as defined by the state of the state machine is to ask the user for the 
+details of the product they want to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The previous tool 
+calls accomplished transitioning to the submitting flow. Based on these previous tool calls and all available information, I am choosing to respond to the customer."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "\n\n### Audio Response to Customer\n\nAlright, I've got all the details for your submission of thirty bushels of organic Sumo oranges at sixty dollars per bushel. Is this correct?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "Alright, I've got all the details for your submission of thirty bushels of organic Sumo oranges at sixty dollars per bushel. Is this correct?",
+    'reason': "To address the customer's submission of organic Sumo oranges to the store's catalog. The information provided by the tools tells me the customer has specified 30 bushels of organic Sumo 
+oranges at 60 dollars per bushel. The customer is able to see their previous inputs. My current objective as defined by the state of the state machine is to collect the details of the product the user 
+wants to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? true. The tool outputs are missing a confirmation of
+the submission. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: yes
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-state',
+    'reason': "The historical conversation showed the user wants to submit a product to be listed on the store's catalog. My current objective as defined by the state of the state machine is to collect 
+the product details. Is the user's question related to the current objective? True. Has the objective of the current state been met? True. The previous tool calls accomplished transitioning to the correct
+flow and collecting product details. Based on these previous tool calls and all available information, I am choosing to transition to the next state."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Just a sec, let me process this for you.',
+    'reason': "The customer has provided the necessary details for submitting a product to the catalog. I'm acknowledging that I'm working on their request."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'state_transition_contactDetails',
+    'reason': "My current objective as defined by the state of the state machine is to allow the user to submit a new item to be listed in the store's catalog. The objective of the current state has been 
+met. Based on the context of my conversation with the customer, I am choosing to transition to the 'contactDetails' state."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to state 'contactDetails'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* state_transition_contactDetails: Calling state_transition_contactDetails with input empty returned transitioned to state 
+'contactDetails'. The user has submitted thirty bushels of organic Sumo oranges at sixty dollars per bushel and is now being asked for their contact details.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling state_transition_contactDetails with input empty returned transitioned to state 'contactDetails'. The user has submitted thirty bushels of organic Sumo oranges at sixty dollars per 
+bushel and is now being asked for their contact details.",
+    'reason': 'Converting tool output to natural language description.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* state_transition_contactDetails: Calling state_transition_contactDetails with input empty returned transitioned to state 
+'contactDetails'. The user has submitted thirty bushels of organic Sumo oranges at sixty dollars per bushel and is now being asked for their contact details.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed that the user wants to submit a product to be listed on the store's catalog. My current objective as defined by the state of the state machine is to ask 
+the user for their contact details. Is the user's question related to the current objective? No. Has the objective of the current state been met? No. The previous tool calls accomplished collecting 
+product details. Based on these previous tool calls and all available information, I am choosing to ask the user for their contact details."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* state_transition_contactDetails: Calling state_transition_contactDetails with input empty returned transitioned to state 
+'contactDetails'. The user has submitted thirty bushels of organic Sumo oranges at sixty dollars per bushel and is now being asked for their contact details.\n\n\n### Audio Response to Customer\n\nWhat's 
+your contact information so we can get in touch with you about your submission?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "What's your contact information so we can get in touch with you about your submission?",
+    'reason': "To address the customer's submission of a new item to be listed in the store's catalog. The information provided by the tools tells me that the customer has submitted thirty bushels of 
+organic Sumo oranges at sixty dollars per bushel. The customer can see the submission details below. My current objective as defined by the state of the state machine is to collect the customer's contact 
+details. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The tool outputs are missing the customer's contact information to complete 
+the submission. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: wait actually let me buy something
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-flow',
+    'reason': "The historical conversation showed the user started to submit a product to be listed in the store's catalog, then changed their mind to buy something, and now wants to buy something again. 
+My current objective as defined by the state of the state machine is to ask the user for their contact details. Is the user's question related to the current objective? False. Has the objective of the 
+current state been met? False. The previous tool calls accomplished transitioning to submitting and then back to buying. Based on these previous tool calls and all available information, I am choosing to 
+transition to the buying flow."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me switch gears real quick.',
+    'reason': 'The customer has changed their intention from submitting a product to buying something, and I need to adjust my processing accordingly.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'flow_transition_buying',
+    'reason': "My current objective as defined by the state of the state machine is to ask the user for their contact details so that you can get in touch with them to confirm the submission of their 
+product. The objective of the current state has not been met, as the user wants to buy something instead. Based on the context of my conversation with the customer, I am choosing to transition to flow 
+'buying'."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to flow 'buying'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_buying: Calling flow transition with no input returned transitioned to flow 'buying'. The user previously 
+expressed their intention to submit a product, thirty bushels of organic Sumo oranges at sixty dollars per bushel, but has now changed their mind and would like to buy something.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling flow transition with no input returned transitioned to flow 'buying'. The user previously expressed their intention to submit a product, thirty bushels of organic Sumo oranges at 
+sixty dollars per bushel, but has now changed their mind and would like to buy something.",
+    'reason': 'The tool flow_transition_buying was called with empty input and transitioned to the buying flow.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_buying: Calling flow transition with no input returned transitioned to flow 'buying'. The user previously 
+expressed their intention to submit a product, thirty bushels of organic Sumo oranges at sixty dollars per bushel, but has now changed their mind and would like to buy something.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user previously submitted a product to be listed on the store's catalog, but then changed their mind and decided to buy something. My current 
+objective as defined by the state of the state machine is to help the user select and purchase an item from the store. Is the user's question related to the current objective? Yes. Has the objective of 
+the current state been met? No. The previous tool calls accomplished transitioning to the 'buying' flow and then to the current state. Based on these previous tool calls and all available information, I 
+am choosing to ask the user what they want to find today."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_buying: Calling flow transition with no input returned transitioned to flow 'buying'. The user previously 
+expressed their intention to submit a product, thirty bushels of organic Sumo oranges at sixty dollars per bushel, but has now changed their mind and would like to buy something.\n\n\n### Audio Response 
+to Customer\n\nWhat would you like to buy today?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'What would you like to buy today?',
+    'reason': "To address the customer's inquiry about buying something The information provided by the tools tells me the customer previously expressed their intention to submit a product, thirty bushels
+of organic Sumo oranges at sixty dollars per bushel, but has now changed their mind and would like to buy something The customer is able to see the last tool call information My current objective as 
+defined by the state of the state machine is to help the user select and purchase an item from the store Is the user's question related to the current objective? true Has the objective of the current 
+state been met? false The tool outputs are missing information about what the customer wants to buy Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: snowboards
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wanted to buy something, then submitted a product, but changed their mind again to buy something. My current objective as defined by the state of
+the state machine is to help the user select and purchase an item from the store. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The
+previous tool calls accomplished transitioning between flows. Based on these previous tool calls and all available information, I am choosing to respond to the customer to ask which product they want to 
+purchase."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': '\n\n### Audio Response to Customer\n\nWhat kind of snowboard are you looking for?'}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'What kind of snowboard are you looking for?',
+    'reason': "To help the customer find a product, The information provided by the tools tells me the customer wants to buy something. The customer is able to see the previous conversation about 
+submitting an item. My current objective as defined by the state of the state machine is to assist the user in selecting an item to purchase. Is the user's question related to the current objective? True.
+Has the objective of the current state been met? False. The tool outputs are missing information about the specific snowboard the customer is looking for. Based on the tool outputs, I will give the 
+customer a factually grounded response which says"
+}
+================================================================================
+Customer: blue
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'call-tool',
+    'reason': "The historical conversation showed the user wants to buy something and has specified a product type of snowboards with a color of blue. My current objective as defined by the state of the 
+state machine is to ask the user for the details of the product they want to purchase. Is the user's question related to the current objective? true. Has the objective of the current state been met? 
+false. The previous tool calls accomplished transitioning to the buying flow and then asking for product details. Based on these previous tool calls and all available information, I am choosing to call 
+the get_products tool to retrieve a list of blue snowboards."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me find that for you.',
+    'reason': "The customer has changed their mind multiple times, from submitting a product to buying something, and now is looking for a specific type of snowboard. The waiting message acknowledges that
+I'm working on their request without giving away specific details."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ChooseTool',
+    'output': 'get_products',
+    'reason': "The previous tool calls accomplished we have not gotten product details. My current objective as defined by the state of the state machine is to ask the user for the details of the product 
+they want to purchase. Has this objective been met? false. Is the user's question related to the current objective? true. Based on these previous actions, the correct tool to call is get_products(). When 
+I call this tool, I will use the following parameters: none."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'IdentifyToolParams',
+    'output': {},
+    'reason': ''
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': {
+        '9669071307065': {'product_id': 9669071307065, 'product_title': 'Gift Card', 'options': [{'option_title': 'Denominations'}]},
+        '9669071569209': {'product_id': 9669071569209, 'product_title': 'Selling Plans Ski Wax', 'options': [{'option_title': 'Title'}]},
+        '9669071438137': {'product_id': 9669071438137, 'product_title': 'The 3p Fulfilled Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071110457': {'product_id': 9669071110457, 'product_title': 'The Collection Snowboard: Hydrogen', 'options': [{'option_title': 'Title'}]},
+        '9669071634745': {'product_id': 9669071634745, 'product_title': 'The Collection Snowboard: Liquid', 'options': [{'option_title': 'Title'}]},
+        '9669071536441': {'product_id': 9669071536441, 'product_title': 'The Collection Snowboard: Oxygen', 'options': [{'option_title': 'Title'}]},
+        '9669071241529': {'product_id': 9669071241529, 'product_title': 'The Compare at Price Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071143225': {'product_id': 9669071143225, 'product_title': 'The Complete Snowboard', 'options': [{'option_title': 'Color'}]},
+        '9669071077689': {'product_id': 9669071077689, 'product_title': 'The Hidden Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071372601': {'product_id': 9669071372601, 'product_title': 'The Inventory Not Tracked Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071012153': {'product_id': 9669071012153, 'product_title': 'The Minimal Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071405369': {'product_id': 9669071405369, 'product_title': 'The Multi-location Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071470905': {'product_id': 9669071470905, 'product_title': 'The Multi-managed Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071274297': {'product_id': 9669071274297, 'product_title': 'The Out of Stock Snowboard', 'options': [{'option_title': 'Title'}]},
+        '9669071044921': {'product_id': 9669071044921, 'product_title': 'The Videographer Snowboard', 'options': [{'option_title': 'Title'}]}
+    },
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Widget',
+    'output': {
+        'type': 'shopify-product-list',
+        'details': '{"9669071307065": {"product_id": 9669071307065, "product_title": "Gift Card", "options": [{"option_title": "Denominations"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/gift_card.png?v=1727830795"}, "9669071569209": {"product_id": 9669071569209, "product_title": "Selling Plans Ski Wax", "options": [{"option_title": 
+"Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/snowboard_wax.png?v=1727830798"}, "9669071438137": {"product_id": 9669071438137, "product_title": "The 3p Fulfilled 
+Snowboard", "options": [{"option_title": "Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_b9e0da7f-db89-4d41-83f0-7f417b02831d.jpg?v=1727830796"}, 
+"9669071110457": {"product_id": 9669071110457, "product_title": "The Collection Snowboard: Hydrogen", "options": [{"option_title": "Title"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_0a40b01b-5021-48c1-80d1-aa8ab4876d3d.jpg?v=1727830794"}, "9669071634745": {"product_id": 9669071634745, "product_title": "The Collection 
+Snowboard: Liquid", "options": [{"option_title": "Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_b13ad453-477c-4ed1-9b43-81f3345adfd6.jpg?v=1727830798"}, 
+"9669071536441": {"product_id": 9669071536441, "product_title": "The Collection Snowboard: Oxygen", "options": [{"option_title": "Title"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_d624f226-0a89-4fe1-b333-0d1548b43c06.jpg?v=1727830796"}, "9669071241529": {"product_id": 9669071241529, "product_title": "The Compare at Price 
+Snowboard", "options": [{"option_title": "Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/snowboard_sky.png?v=1727830795"}, "9669071143225": {"product_id": 
+9669071143225, "product_title": "The Complete Snowboard", "options": [{"option_title": "Color"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1727830794"}, "9669071077689": {"product_id": 9669071077689, "product_title": "The Hidden 
+Snowboard", "options": [{"option_title": "Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_c8ff0b5d-c712-429a-be00-b29bd55cbc9d.jpg?v=1727830794"}, 
+"9669071372601": {"product_id": 9669071372601, "product_title": "The Inventory Not Tracked Snowboard", "options": [{"option_title": "Title"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/snowboard_purple_hydrogen.png?v=1727830795"}, "9669071012153": {"product_id": 9669071012153, "product_title": "The Minimal Snowboard", "options": 
+[{"option_title": "Title"}]}, "9669071405369": {"product_id": 9669071405369, "product_title": "The Multi-location Snowboard", "options": [{"option_title": "Title"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_0a4e9096-021a-4c1e-8750-24b233166a12.jpg?v=1727830795"}, "9669071470905": {"product_id": 9669071470905, "product_title": "The Multi-managed 
+Snowboard", "options": [{"option_title": "Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_9129b69a-0c7b-4f66-b6cf-c4222f18028a.jpg?v=1727830796"}, 
+"9669071274297": {"product_id": 9669071274297, "product_title": "The Out of Stock Snowboard", "options": [{"option_title": "Title"}], "product_image_src": 
+"https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main_f44a9605-cd62-464d-b095-d45cdaa0d0d7.jpg?v=1727830795"}, "9669071044921": {"product_id": 9669071044921, "product_title": "The Videographer 
+Snowboard", "options": [{"option_title": "Title"}], "product_image_src": "https://cdn.shopify.com/s/files/1/0903/5602/3609/files/Main.jpg?v=1727830795"}}',
+        'available-tools': [{'tool': 'get_product_details', 'arguments': ['product_id']}]
+    },
+    'reason': 'hard coded widget creation'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* get_products: Calling get_products with input empty returned multiple products with their IDs. Product 9669071307065 is a Gift 
+Card, product 9669071569209 is Selling Plans Ski Wax, product 9669071438137 is The 3p Fulfilled Snowboard, product 9669071110457 is The Collection Snowboard: Hydrogen, product 9669071634745 is The 
+Collection Snowboard: Liquid, product 9669071536441 is The Collection Snowboard: Oxygen, product 9669071241529 is The Compare at Price Snowboard, product 9669071143225 is The Complete Snowboard, product 
+9669071077689 is The Hidden Snowboard, product 9669071372601 is The Inventory Not Tracked Snowboard, product 9669071012153 is The Minimal Snowboard, product 9669071405369 is The Multi-location Snowboard, 
+product 9669071470905 is The Multi-managed Snowboard, product 9669071274297 is The Out of Stock Snowboard, and product 9669071044921 is The Videographer Snowboard. Relevant information to the conversation
+might include the user's previous intent to submit thirty bushels of organic Sumo oranges at sixty dollars per bushel before switching to buying a snowboard.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling get_products with input empty returned multiple products with their IDs. Product 9669071307065 is a Gift Card, product 9669071569209 is Selling Plans Ski Wax, product 9669071438137 
+is The 3p Fulfilled Snowboard, product 9669071110457 is The Collection Snowboard: Hydrogen, product 9669071634745 is The Collection Snowboard: Liquid, product 9669071536441 is The Collection Snowboard: 
+Oxygen, product 9669071241529 is The Compare at Price Snowboard, product 9669071143225 is The Complete Snowboard, product 9669071077689 is The Hidden Snowboard, product 9669071372601 is The Inventory Not 
+Tracked Snowboard, product 9669071012153 is The Minimal Snowboard, product 9669071405369 is The Multi-location Snowboard, product 9669071470905 is The Multi-managed Snowboard, product 9669071274297 is The
+Out of Stock Snowboard, and product 9669071044921 is The Videographer Snowboard. Relevant information to the conversation might include the user's previous intent to submit thirty bushels of organic Sumo 
+oranges at sixty dollars per bushel before switching to buying a snowboard.",
+    'reason': 'The tool call result needs to be converted into a natural language description.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* get_products: Calling get_products with input empty returned multiple products with their IDs. Product 9669071307065 is a Gift 
+Card, product 9669071569209 is Selling Plans Ski Wax, product 9669071438137 is The 3p Fulfilled Snowboard, product 9669071110457 is The Collection Snowboard: Hydrogen, product 9669071634745 is The 
+Collection Snowboard: Liquid, product 9669071536441 is The Collection Snowboard: Oxygen, product 9669071241529 is The Compare at Price Snowboard, product 9669071143225 is The Complete Snowboard, product 
+9669071077689 is The Hidden Snowboard, product 9669071372601 is The Inventory Not Tracked Snowboard, product 9669071012153 is The Minimal Snowboard, product 9669071405369 is The Multi-location Snowboard, 
+product 9669071470905 is The Multi-managed Snowboard, product 9669071274297 is The Out of Stock Snowboard, and product 9669071044921 is The Videographer Snowboard. Relevant information to the conversation
+might include the user's previous intent to submit thirty bushels of organic Sumo oranges at sixty dollars per bushel before switching to buying a snowboard.\n"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user previously expressed their intention to submit a product, thirty bushels of organic Sumo oranges at sixty dollars per bushel, but then changed 
+their mind and wanted to buy something. My current objective as defined by the state of the state machine is to ask the user for the details of the product they want to purchase. Is the user's question 
+related to the current objective? True. Has the objective of the current state been met? False. The previous tool calls accomplished getting multiple products with their IDs. Based on these previous tool 
+calls and all available information, I am choosing to respond to the customer."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* get_products: Calling get_products with input empty returned multiple products with their IDs. Product 9669071307065 is a Gift 
+Card, product 9669071569209 is Selling Plans Ski Wax, product 9669071438137 is The 3p Fulfilled Snowboard, product 9669071110457 is The Collection Snowboard: Hydrogen, product 9669071634745 is The 
+Collection Snowboard: Liquid, product 9669071536441 is The Collection Snowboard: Oxygen, product 9669071241529 is The Compare at Price Snowboard, product 9669071143225 is The Complete Snowboard, product 
+9669071077689 is The Hidden Snowboard, product 9669071372601 is The Inventory Not Tracked Snowboard, product 9669071012153 is The Minimal Snowboard, product 9669071405369 is The Multi-location Snowboard, 
+product 9669071470905 is The Multi-managed Snowboard, product 9669071274297 is The Out of Stock Snowboard, and product 9669071044921 is The Videographer Snowboard. Relevant information to the conversation
+might include the user's previous intent to submit thirty bushels of organic Sumo oranges at sixty dollars per bushel before switching to buying a snowboard.\n\n\n### Audio Response to Customer\n\nLet me 
+help you find a blue snowboard that fits your needs. Can you please tell me more about what you're looking for?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "Let me help you find a blue snowboard that fits your needs. Can you please tell me more about what you're looking for?",
+    'reason': "To address the customer's inquiry about buying a blue snowboard, the information provided by the tools tells me that multiple snowboard products are available. The customer is able to see 
+the list of snowboard products. My current objective as defined by the state of the state machine is to help the user select and purchase an item from the store. Is the user's question related to the 
+current objective? True. Has the objective of the current state been met? False. The tool outputs are missing specific information about the blue snowboard to answer the customer's inquiry. Based on the 
+tool outputs, I will give the customer a factually grounded response which says: "
+}
+================================================================================
+Customer: actually I lost track of what I wanted to do, what are my options again?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user initially wanted to buy something, then changed their mind to submit a product to be listed, but then changed their mind again to buy something. 
+My current objective as defined by the state of the state machine is to help the user select and purchase an item from the store. Is the user's question related to the current objective? true. Has the 
+objective of the current state been met? false. The previous tool calls accomplished getting products. Based on these previous tool calls and all available information, I am choosing to respond to the 
+customer."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': '\n\n### Audio Response to Customer\n\nSo, you were looking to buy something earlier, and we had discussed some snowboard options. Would you like to go back to that, or would you 
+like to submit a new product to our catalog?'
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'So, you were looking to buy something earlier, and we had discussed some snowboard options. Would you like to go back to that, or would you like to submit a new product to our catalog?',
+    'reason': "To address the customer's inquiry about their options again, The information provided by the tools tells me the user had previously expressed an intention to submit a product, thirty 
+bushels of organic Sumo oranges at sixty dollars per bushel, before switching to buying a snowboard. The customer is able to see the conversation history. My current objective as defined by the state of 
+the state machine is to help the user select and purchase an item from the store. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The
+tool outputs are missing the specific product the user wants to purchase to answer the customer's inquiry. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: I want to choose something to do
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the customer initially wanted to buy something, then changed their mind to submit a product, but now they're unsure about what they want to do. My current
+objective as defined by the state of the state machine is to ask the user for the details of the product they want to purchase. Is the user's question related to the current objective? False. Has the 
+objective of the current state been met? False. The previous tool calls accomplished getting the user to express their intentions to submit a product and then switch to buying something. Based on these 
+previous tool calls and all available information, I am choosing to respond to the customer to clarify their intentions."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "\n\n### Audio Response to Customer\n\nLet's get back on track. You can either submit a product to our catalog or purchase something from our store. Which one would you like to do?"
+        }
+    ],
+    'session': {'guid': '9bd7a265-a3ed-462d-98e9-014a576ff255', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "Let's get back on track. You can either submit a product to our catalog or purchase something from our store. Which one would you like to do?",
+    'reason': "To address the customer's decision to choose an option, The information provided by the tools tells me that the customer previously expressed an intention to submit a product to our 
+catalog, thirty bushels of organic Sumo oranges at sixty dollars per bushel, and then decided to buy something instead, specifically looking at blue snowboards. The customer is able to see the 
+conversation history. My current objective as defined by the state of the state machine is to help the user select and purchase an item from the store. Is the user's question related to the current 
+objective? true. Has the objective of the current state been met? false. The tool outputs are missing the customer's final decision to answer their inquiry. Based on the tool outputs, I will give the 
+customer a factually grounded response which says"
+}
+================================================================================

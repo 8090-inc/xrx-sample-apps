@@ -4,7 +4,7 @@ import asyncio
 import logging
 import json
 import asyncio
-from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
+from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer, StateMachine
 import openai
 from agent.config import store_info, customer_service_task
 
@@ -40,6 +40,10 @@ Here is the conversation so far:
 
 {conversation}
 
+## Flow and State Information
+
+{flow_and_state_info}
+
 ## Output Format
 You must return a perfectly formatted JSON object which can be serialized with the following keys:
 - 'reason': a string explaining what you will talk about in your response.
@@ -50,6 +54,9 @@ The 'reason' string should follow a logical step by step pattern like below:
 "To address the customer's inquiry about <customer inquiry> \
 The information provided by the tools tells me <analysis of the tool outputs>.
 The customer is able to see <last tool call information>.
+My current objective as defined by the state of the state machine is <current objective>. \
+Is the user's question related to the current objective? <true or false>. \
+Has the objective of the current state been met? <true or false>. \
 The tool outputs are missing <missing information> to answer the customer's inquiry.
 Based on the tool outputs, I will give the customer a factually grounded response which says <response to the customer>"
 
@@ -77,6 +84,9 @@ Here are some examples of good and bad response patterns when a tool is visible 
 Do not use simple assumptions about products, services, or variations available at the store \
 no matter how simple they might be. So, when you stating your "reason", make sure you cite the tool outputs \
 if you are providing details about the store, products, orders, cart, etc.
+* If the user's question is not related to the current objective, immediately inform them that you are \
+unable to help with their request and move the focus back towards the current objective. Do not ask them any \
+clarifying questions.
 * If a customer asks a question you cannot answer based on the tool outputs, you should tell them that you do not know.
 * Relaying any information to the customer which is not present in the conversational context or previous tool calls \
 will result in a penalty.
@@ -113,6 +123,12 @@ class CustomerResponse(Node):
             # create the conversation variable
             conversation = ''.join([f"{i['role']}: {i['content']}\n" for i in messages])
 
+            # add the state machine prompt to the system prompt
+            single_system_prompt = single_system_prompt.replace('{flow_and_state_info}', StateMachine.getStateMachinePrompt(input['memory']))
+
+            # add state machine tool info to the system prompt
+            single_system_prompt = single_system_prompt.replace('{state_machine_tools}', StateMachine.getStateMachineTransitionCalls(input['memory']))
+
             # add tool call cache to the conversation if it exists
             if len(tool_output_cache) > 0:
                 tool_output_cache_str = ''.join([f"* {i['tool']}: {i['description']}\n" for i in tool_output_cache])
@@ -121,6 +137,7 @@ class CustomerResponse(Node):
 
             # add the conversation to the system prompt
             single_system_prompt = single_system_prompt.replace('{conversation}', conversation)
+
 
             # create the messages format
             input_messages = [

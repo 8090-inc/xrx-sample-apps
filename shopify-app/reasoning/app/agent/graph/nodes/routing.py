@@ -4,11 +4,12 @@ import os
 import logging
 import asyncio
 import json
-from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
+from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer, StateMachine
 from agent.config import tools_dict, tool_param_desc
 from agent.config import store_info, customer_service_task
 import openai
 import copy
+import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -31,19 +32,31 @@ You an expert at determining if you have enough information to generate a respon
 You have access to the following tools:
 {tools}
 
+## State Machine Tools
+Use these tools if the objective of the current state has been met.
+{state_machine_tools}
+
 ## Conversation
 
 Here is the conversation so far:
 
 {conversation}
 
+## Flow and State Information
+
+{flow_and_state_info}
+
+
 ## Output Format
 You must return a perfectly formatted JSON object which can be serialized with the following keys:
 - 'reason': a string explaining why you chose to either call a tool or respond to the customer.
-- 'next-action': a string representing the next action to take. This will be 'call-tool' or 'respond-to-customer'.
+- 'next-action': a string representing the next action to take. This will be 'call-tool', 'respond-to-customer', 'transition-state', or 'transition-flow'.
 
 The 'reason' string should follow a logical step by step pattern like below:
 "The historical conversation showed <diagnosis of conversation so far>. \
+My current objective as defined by the state of the state machine is <current objective>. \
+Is the user's question related to the current objective? <true or false>. \
+Has the objective of the current state been met? <true or false>. \
 The previous tool calls accomplished <diagnosis of tool calls so far>. \
 Based on these previous tool calls and all available information, I am choosing to
 <description of the tool call or response to the customer>"
@@ -54,6 +67,10 @@ Your JSON output should not have more than the two keys 'reason' and 'next-actio
 Whenever a customer is asking questions about something in the shop, you should only respond if:
 1. You are certain of the answer based on the output of tools
 2. You have tried to find the information via tools and it is not available.
+
+You should not do anything that will not move you directly towards satisfying the objective of the current state.
+If you have satisfied the objective of the current state, immediately transition to the next appropriate state or 
+flow with a tool call.
 '''.replace('{tools}','\n'.join([f"{tool}({', '.join([f'{desc}' for param, desc in tool_param_desc[tool].items()])})" for tool in tools_dict.keys()]) )
 SYSTEM_PROMPT = SYSTEM_PROMPT.replace('{store_info}', store_info).replace('{customer_service_task}', customer_service_task)
 
@@ -93,6 +110,12 @@ class Routing(Node):
 
             # add the conversation to the system prompt
             single_system_prompt = single_system_prompt.replace('{conversation}', conversation)
+
+            # add the state machine prompt to the system prompt
+            single_system_prompt = single_system_prompt.replace('{flow_and_state_info}', StateMachine.getStateMachinePrompt(input['memory']))
+
+            # add state machine tool info to the system prompt
+            single_system_prompt = single_system_prompt.replace('{state_machine_tools}', StateMachine.getStateMachineTransitionCalls(input['memory']))
 
             # create the messages format
             input_messages = [
@@ -155,6 +178,14 @@ class Routing(Node):
                 'memory': memory
             })))
             successors.append(("ChooseTool", copy.deepcopy({
+                'memory': memory
+            })))
+        
+        if 'transition-state' in next_action or 'transition-flow' in next_action:
+            successors.append(("TaskDescriptionResponse", copy.deepcopy({
+                'memory': memory
+            })))
+            successors.append(("TransitionState", copy.deepcopy({
                 'memory': memory
             })))
         

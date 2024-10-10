@@ -1,11 +1,13 @@
 from .context_manager import set_session, session_var
 import asyncio
 import json
-from agent_framework import observability_decorator
+from agent_framework import observability_decorator, StateMachine
 from .graph.main import agent_graph
 import logging
 import traceback
 import os
+import copy
+import pdb
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -23,7 +25,12 @@ async def run_agent(input_dict: dict):
     
     # Look up the session information and ensure there is a cart id to work with
     session_data = input_dict['session']
+
+    if ("stateMachine" not in session_data):
+        StateMachine.initStateMachineSessionData(session_data)
+
     messages = input_dict['messages']
+    state_machine = input_dict['session']['stateMachine']
     action = input_dict.get('action', {})
     task_id = input_dict.get('task_id', '')
     
@@ -35,7 +42,7 @@ async def run_agent(input_dict: dict):
             logging.info("Starting to enter the graph")
 
             # place graph execution here
-            async for result in agent_graph(messages, task_id, action, {}):
+            async for result in agent_graph(messages, task_id, action, {}, state_machine):
                 if 'error' in result:
                     logging.error(f"Error in graph traversal: {result}")
                     yield json.dumps(result)
@@ -86,6 +93,10 @@ def format_result_to_output(result):
         
         logging.exception(f"An error occurred during format_result_to_output")
         raise e
+
+    #TODO(mprast): this is a hack; ask the team for the right way to do this
+    session = session_var.get()
+    session['stateMachine'] = result['memory']['stateMachine']
 
     return json.dumps({
         'messages': messages_output,
