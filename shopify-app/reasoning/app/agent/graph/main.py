@@ -4,6 +4,7 @@ from .nodes.routing import Routing
 from .nodes.choose_tool import ChooseTool
 from .nodes.transition_state import TransitionState
 from .nodes.customer_response import CustomerResponse
+from .nodes.state_machine_guardrails_check import StateMachineGuardrailsCheck
 from .nodes.convert_natural_language import ConvertNaturalLanguage
 from .nodes.identify_tool_params import IdentifyToolParams
 from .nodes.execute_tool import ExecuteTool
@@ -37,6 +38,7 @@ async def agent_graph(messages, task_id='', action={}, memory=None, state_machin
     node_execute_tool = ExecuteTool('ExecuteTool', {})
     node_transition_state = TransitionState('TransitionState', {})
     node_customer_response = CustomerResponse('CustomerResponse', {})
+    node_state_machine_guardrails_check = StateMachineGuardrailsCheck('StateMachineGuardrailsCheck', {})
     node_widget = Widget('Widget', {})
     node_task_description = TaskDescriptionResponse('TaskDescriptionResponse', {})
 
@@ -45,6 +47,7 @@ async def agent_graph(messages, task_id='', action={}, memory=None, state_machin
     graph.add_node(node_routing)
     graph.add_node(node_choose_tool)
     graph.add_node(node_customer_response)
+    graph.add_node(node_state_machine_guardrails_check)
     graph.add_node(node_convert_natural_language)
     graph.add_node(node_identify_tool_params)
     graph.add_node(node_execute_tool)

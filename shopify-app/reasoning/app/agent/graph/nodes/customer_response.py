@@ -7,6 +7,8 @@ import asyncio
 from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer, StateMachine
 import openai
 from agent.config import store_info, customer_service_task
+import copy
+import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -179,4 +181,7 @@ class CustomerResponse(Node):
             raise e
 
     async def get_successors(self, result: dict):
-        return []
+        return [("StateMachineGuardrailsCheck", copy.deepcopy({
+            'memory': result['memory'],
+            'agentResponse': result['output']
+        }))]
