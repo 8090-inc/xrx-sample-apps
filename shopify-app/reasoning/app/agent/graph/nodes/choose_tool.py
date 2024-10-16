@@ -7,7 +7,6 @@ from agent_framework import observability_decorator, initialize_async_llm_client
 from agent.config import tools_desc
 import openai
 from pprint import pformat
-import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)

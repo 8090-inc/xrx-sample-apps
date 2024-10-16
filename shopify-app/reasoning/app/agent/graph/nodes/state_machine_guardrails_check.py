@@ -7,7 +7,6 @@ import asyncio
 from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer, StateMachine
 import openai
 from agent.config import store_info, customer_service_task
-import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)

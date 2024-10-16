@@ -5,7 +5,6 @@ import json
 from agent.config import tools_dict, tool_param_desc
 from agent_framework import observability_decorator, StateMachine
 import copy
-import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)

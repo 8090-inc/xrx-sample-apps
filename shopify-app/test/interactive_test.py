@@ -5,7 +5,6 @@ import uuid
 from rich import print as rprint
 from termcolor import colored
 from rich import print as rprint
-import pdb
 
 # Define the URL
 url = "http://127.0.0.1:8003/run-reasoning-agent"

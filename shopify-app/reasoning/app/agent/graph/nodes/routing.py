@@ -9,7 +9,6 @@ from agent.config import tools_dict, tool_param_desc
 from agent.config import store_info, customer_service_task
 import openai
 import copy
-import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -70,7 +69,7 @@ Whenever a customer is asking questions about something in the shop, you should 
 
 You should not do anything that will not move you directly towards satisfying the objective of the current state.
 If you have satisfied the objective of the current state, immediately transition to the next appropriate state or 
-flow with a tool call.
+flow with a tool call. 
 '''.replace('{tools}','\n'.join([f"{tool}({', '.join([f'{desc}' for param, desc in tool_param_desc[tool].items()])})" for tool in tools_dict.keys()]) )
 SYSTEM_PROMPT = SYSTEM_PROMPT.replace('{store_info}', store_info).replace('{customer_service_task}', customer_service_task)
 

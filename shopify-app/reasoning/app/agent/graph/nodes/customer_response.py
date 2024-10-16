@@ -8,7 +8,6 @@ from agent_framework import observability_decorator, initialize_async_llm_client
 import openai
 from agent.config import store_info, customer_service_task
 import copy
-import pdb
 
 # Configure logger
 logger = logging.getLogger(__name__)
