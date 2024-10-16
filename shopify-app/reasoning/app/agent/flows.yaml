@@ -1,0 +1,35 @@
+flows:
+  query:
+    initial: true
+    description: "In this flow you should figure out which of the other flows the user wants to enter into. This flow should be selected when you have fulfilled the objective of a state, but there are no outgoing transitions to other states."
+    states:
+      query:
+        initial: true
+        description: "Determine whether the user wants to buy something from the store or submit something to the store."
+
+  buying:
+    description: "In this flow your task is to help the user select and purchase an item from the store."
+    states:
+      productDetails:
+        initial: true
+        description: "In this state you should ask the user for the details of the product they want to purchase."
+        transitions: ["addOnSuggestions", "confirmation"]
+      addOnSuggestions:
+        description: "In this state you should suggest additional products that the user might want to purchase based on the product they have selected, if appropriate."
+        transitions: ["confirmation"] 
+      confirmation:
+        description: "In this state you should confirm with the user that they have selected the product and that they want to proceed with the purchase."
+        transitions: ["checkout"]
+      checkout:
+        description: "In this state you should ask the user for their payment details so that you can process their purchase."
+      
+  submitting: 
+    description: "In this flow your task is to allow the user to submit a new item to be listed in the store's catalog. You should collect the appropriate details from the user and then update the store's catalog as necessary." 
+    states:
+      productDetails:
+        initial: true
+        description: "In this state you should ask the user for the details of the product they want to submit to the store's catalog."
+        transitions: ["contactDetails"]
+      contactDetails:
+        description: "In this state you should ask the user for their contact details so that you can get in touch with them to confirm the submission of their product."
+              

@@ -4,7 +4,7 @@ import asyncio
 import logging
 import json
 import asyncio
-from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
+from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer, StateMachine
 from agent.config import tools_dict, tool_param_desc
 import openai
 
@@ -102,6 +102,8 @@ class ConvertNaturalLanguage(Node):
             # add the conversation to the system prompt
             single_system_prompt = single_system_prompt.replace('{conversation}', conversation)
 
+            single_system_prompt = single_system_prompt.replace('{flow_and_state_info}', StateMachine.getStateMachinePrompt(input['memory']))
+            
             # create the messages format
             input_messages = [
                 {

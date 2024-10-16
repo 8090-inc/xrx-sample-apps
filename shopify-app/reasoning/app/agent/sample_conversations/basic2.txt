@@ -1,0 +1,374 @@
+(myenv) mprast@Matthews-MacBook-Pro test % python interactive_test.py
+Interactive Shopify Agent Test. Type 'quit' to exit.
+================================================================================
+Customer: hello
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user greeted the assistant. My current objective as defined by the state of the state machine is to determine which flow the user should enter into 
+next. Is the user's question related to the current objective? false. Has the objective of the current state been met? false. The previous tool calls accomplished nothing. Based on these previous tool 
+calls and all available information, I am choosing to respond to the customer to gather more information."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': '\n\n### Audio Response to Customer\n\nHow can I help you today?'}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'How can I help you today?',
+    'reason': "To address the customer's greeting, The information provided by the tools tells me nothing. \n              The customer is able to see nothing. \n              My current objective as 
+defined by the state of the state machine is to determine which flow the user should enter into next. \n              Is the user's question related to the current objective? False. \n              Has 
+the objective of the current state been met? False. \n              The tool outputs are missing any information about the customer's needs. \n              Based on the tool outputs, I will give the 
+customer a factually grounded response which says:"
+}
+================================================================================
+Customer: i'd like to submit something to be listed on the store
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-state',
+    'reason': "The historical conversation showed the user greeted and expressed their intention to submit a new item to be listed in the store. My current objective as defined by the state of the state 
+machine is to determine which flow the user should enter into next. Is the user's question related to the current objective? true. Has the objective of the current state been met? true. The previous tool 
+calls accomplished nothing. Based on these previous tool calls and all available information, I am choosing to transition to the 'submitting' flow."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me check on that for you.',
+    'reason': "The customer has requested to list an item on the store, and I'm preparing the necessary information."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'flow_transition_submitting',
+    'reason': 'My current objective as defined by the state of the state machine is to determine which flow the user should enter into next. The objective of the current state has been met. Based on the 
+context of my conversation with the customer, I am choosing to transition to submitting flow because the user has expressed their intention to submit an item to the store.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to flow 'submitting'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_submitting: Based on the conversation, the system has transitioned to the flow 'submitting', which means the 
+user's request to list a product on the store is being processed.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Based on the conversation, the system has transitioned to the flow 'submitting', which means the user's request to list a product on the store is being processed.",
+    'reason': "The tool output indicates the flow has been transitioned to 'submitting', which is a critical step in the product listing process."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_submitting: Based on the conversation, the system has transitioned to the flow 'submitting', which means the 
+user's request to list a product on the store is being processed.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a new item to be listed in the store's catalog. My current objective as defined by the state of the state machine is to ask the 
+user for the details of the product they want to submit to the store's catalog. Is the user's question related to the current objective? True. Has the objective of the current state been met? False. The 
+previous tool calls accomplished transitioning to the 'submitting' flow. Based on these previous tool calls and all available information, I am choosing to respond to the customer to ask about the product
+details."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_submitting: Based on the conversation, the system has transitioned to the flow 'submitting', which means the 
+user's request to list a product on the store is being processed.\n\n\n### Audio Response to Customer\n\nWhat would you like to submit to the store?"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'What would you like to submit to the store?',
+    'reason': "To address the customer's inquiry about submitting a new item to be listed in the store's catalog. The information provided by the tools tells me the user's request is being processed. The 
+customer is able to see the current state of submitting a product. My current objective as defined by the state of the state machine is to ask for the details of the product the user wants to submit. Is 
+the user's question related to the current objective? True. Has the objective of the current state been met? False. The tool outputs are missing the details of the product the user wants to submit. Based 
+on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: skis
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a product to the store. My current objective as defined by the state of the state machine is to ask the user for the details of 
+the product they want to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The previous tool calls 
+accomplished transitioning to the 'submitting' flow. Based on these previous tool calls and all available information, I am choosing to ask for more details about the product."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': "\n\n### Audio Response to Customer\n\nCan you tell me more about the skis you'd like to submit, like the brand, model, and condition?"}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "Can you tell me more about the skis you'd like to submit, like the brand, model, and condition?",
+    'reason': "To address the customer's inquiry about submitting a new item to the store's catalog. The information provided by the tools tells me that the customer wants to submit an item called 'skis'.
+The customer is able to see the output from the flow_transition_submitting tool. My current objective as defined by the state of the state machine is to collect the details of the product the user wants 
+to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The tool outputs are missing the specific details 
+of the skis the customer wants to submit. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: volkl mantras, used, 2022
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a product to the store. My current objective as defined by the state of the state machine is to ask the user for the details of 
+the product they want to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The previous tool calls 
+accomplished nothing. Based on these previous tool calls and all available information, I am choosing to respond to the customer to ask for more details about the product."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': "\n\n### Audio Response to Customer\n\nWhat's the condition of the skis like? Are they in excellent, good or fair shape?"}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "What's the condition of the skis like? Are they in excellent, good or fair shape?",
+    'reason': "To address the customer's inquiry about submitting Volkl Mantras skis to the store, The information provided by the tools tells me the customer wants to submit a used 2022 model to the 
+store's catalog. The customer is able to see the product details on the app screen. My current objective as defined by the state of the state machine is to collect the appropriate details from the user. 
+Is the user's question related to the current objective? true. Has the objective of the current state been met? false. The tool outputs are missing the price and condition details to answer the customer's
+inquiry. Based on the tool outputs, I will give the customer a factually grounded response which says"
+}
+================================================================================
+Customer: excellent
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-state',
+    'reason': "The historical conversation showed the user wants to submit a product to the store's catalog. My current objective as defined by the state of the state machine is to ask the user for the 
+details of the product they want to submit to the store's catalog. Is the user's question related to the current objective? true. Has the objective of the current state been met? true. The previous tool 
+calls accomplished nothing. Based on these previous tool calls and all available information, I am choosing to get the product details from the user and then transition to the next state."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me just confirm that.',
+    'reason': "The customer has provided detailed information about the skis they want to submit, so I'm acknowledging that I'm working on their request."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'state_transition_contactDetails',
+    'reason': "My current objective as defined by the state of the state machine is to ask the user for the details of the product they want to submit to the store's catalog. The objective of the current 
+state has been met. Based on the context of my conversation with the customer, I am choosing to transition to the 'contactDetails' state."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to state 'contactDetails'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* state_transition_contactDetails: Calling state_transition_contactDetails with input {} returned 'Transitioned to state 
+'contactDetails'. The system is now asking for contact information to process the submission of the used 2022 Volkl Mantras skis in excellent condition.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling state_transition_contactDetails with input {} returned 'Transitioned to state 'contactDetails'. The system is now asking for contact information to process the submission of the 
+used 2022 Volkl Mantras skis in excellent condition.",
+    'reason': 'The tool call result indicates a state transition, so the description should convey the new state and its relevance to the conversation.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* state_transition_contactDetails: Calling state_transition_contactDetails with input {} returned 'Transitioned to state 
+'contactDetails'. The system is now asking for contact information to process the submission of the used 2022 Volkl Mantras skis in excellent condition.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'respond-to-customer',
+    'reason': "The historical conversation showed the user wants to submit a used 2022 Volkl Mantras skis in excellent condition to be listed on the store. My current objective as defined by the state of 
+the state machine is to ask the user for their contact details so that I can get in touch with them to confirm the submission of their product. Is the user's question related to the current objective? 
+true. Has the objective of the current state been met? false. The previous tool calls accomplished transitioning to the submitting flow and collecting product details. Based on these previous tool calls 
+and all available information, I am choosing to ask the user for their contact details."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* state_transition_contactDetails: Calling state_transition_contactDetails with input {} returned 'Transitioned to state 
+'contactDetails'. The system is now asking for contact information to process the submission of the used 2022 Volkl Mantras skis in excellent condition.\n\n\n### Audio Response to Customer\n\nCan I get 
+your contact details, please, so I can reach out to you about your submission?"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': 'Can I get your contact details, please, so I can reach out to you about your submission?',
+    'reason': "To address the customer's submission of the used 2022 Volkl Mantras skis in excellent condition for listing on the store. The information provided by the tools tells me the customer's skis 
+details. The customer is able to see the submission is being processed. My current objective as defined by the state of the state machine is to collect the customer's contact details. Is the user's 
+question related to the current objective? False. Has the objective of the current state been met? False. The tool outputs are missing the customer's contact information to answer the customer's 
+submission. Based on the tool outputs, I will give the customer a factually grounded response which says "
+}
+================================================================================
+Customer: sure. my phone number is 382-239-1929 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-state',
+    'reason': "The historical conversation showed the user wants to submit a product to the store. My current objective as defined by the state of the state machine is to ask the user for their contact 
+details so that you can get in touch with them to confirm the submission of their product. Is the user's question related to the current objective? True. Has the objective of the current state been met? 
+True. The previous tool calls accomplished the collection of product details. Based on these previous tool calls and all available information, I am choosing to transition to the next state."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TaskDescriptionResponse',
+    'output': 'Let me just finalize the details.',
+    'reason': "I chose this message because the assistant is currently processing the customer's submission and gathering necessary information."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': 'flow_transition_query',
+    'reason': "My current objective as defined by the state of the state machine is to ask the user for their contact details so that you can get in touch with them to confirm the submission of their 
+product. The objective of the current state has been met. Based on the context of my conversation with the customer, I am choosing to transition to the 'query' flow."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [{'role': 'assistant', 'content': ''}],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ExecuteTool',
+    'output': "Transitioned to flow 'query'",
+    'reason': 'Output of tool'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_query: Calling flow_transition_query with input {} returned 'Transitioned to flow 'query''. The system is now in 
+the query flow, still processing the submission of the used 2022 Volkl Mantras skis in excellent condition with a phone number of 382-239-1929.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'ConvertNaturalLanguage',
+    'output': "Calling flow_transition_query with input {} returned 'Transitioned to flow 'query''. The system is now in the query flow, still processing the submission of the used 2022 Volkl Mantras skis
+in excellent condition with a phone number of 382-239-1929.",
+    'reason': "The flow_transition_query tool was called without any input and returned a transition to the 'query' flow."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_query: Calling flow_transition_query with input {} returned 'Transitioned to flow 'query''. The system is now in 
+the query flow, still processing the submission of the used 2022 Volkl Mantras skis in excellent condition with a phone number of 382-239-1929.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'Routing',
+    'output': 'transition-state',
+    'reason': "The historical conversation showed the user wants to submit a product to the store, specifically used 2022 Volkl Mantras skis in excellent condition. My current objective as defined by the 
+state of the state machine is to determine which flow the user should enter into next. Is the user's question related to the current objective? true. Has the objective of the current state been met? true.
+The previous tool calls accomplished transitioning to the query flow. Based on these previous tool calls and all available information, I am choosing to transition to the buying flow since the user has 
+provided all necessary information."
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_query: Calling flow_transition_query with input {} returned 'Transitioned to flow 'query''. The system is now in 
+the query flow, still processing the submission of the used 2022 Volkl Mantras skis in excellent condition with a phone number of 382-239-1929.\n"
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'TransitionState',
+    'output': '',
+    'reason': 'My current objective as defined by the state of the state machine is to determine which flow the user should enter into next. The objective of the current state has been met. Based on the 
+context of my conversation with the customer, I am choosing to transition to submitting.'
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Graph Agent Output:
+{
+    'messages': [
+        {
+            'role': 'assistant',
+            'content': "### Tools Used Before Responding to Customer\n\n* flow_transition_query: Calling flow_transition_query with input {} returned 'Transitioned to flow 'query''. The system is now in 
+the query flow, still processing the submission of the used 2022 Volkl Mantras skis in excellent condition with a phone number of 382-239-1929.\n\n\n### Audio Response to Customer\n\nYou've provided all 
+necessary information. I'll review your submission and be in touch soon."
+        }
+    ],
+    'session': {'guid': '2a1deb9e-4632-430c-ba53-aad96ba4ebb3', 'stateMachine': '<lengthy state machine info redacted>'},
+    'node': 'CustomerResponse',
+    'output': "You've provided all necessary information. I'll review your submission and be in touch soon.",
+    'reason': "To address the customer's submission of used 2022 Volkl Mantras skis, The information provided by the tools tells me that the customer has provided contact details. The customer is able to 
+see their contact information on the screen. My current objective as defined by the state of the state machine is to determine which flow the user should enter into next. Is the user's question related to
+the current objective? true. Has the objective of the current state been met? true. The tool outputs are missing information about which flow the user wants to enter into. Based on the tool outputs, I 
+will give the customer a factually grounded response which says they've provided all necessary information."
+}
+================================================================================

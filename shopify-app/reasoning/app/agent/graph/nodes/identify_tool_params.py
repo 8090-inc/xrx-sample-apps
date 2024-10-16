@@ -3,7 +3,7 @@ import os
 import logging
 import json
 import asyncio
-from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer
+from agent_framework import observability_decorator, initialize_async_llm_client, json_fixer, StateMachine
 from agent.config import tools_dict, tool_param_desc
 import openai
 from pprint import pformat
@@ -30,6 +30,10 @@ You an expert at identifying and mapping parameters from a conversation and memo
 
 ## Conversation so far:
 {conversation}
+
+## Flow and State Information
+
+{flow_and_state_info}
 
 ## Output Format
 You must return a perfectly formatted JSON object which can be serialized with the following keys:
@@ -87,6 +91,13 @@ class IdentifyToolParams(Node):
 
                 # add the conversation to the system prompt
                 single_system_prompt = single_system_prompt.replace('{conversation}', conversation)
+
+                # add the state machine prompt to the system prompt
+                single_system_prompt = single_system_prompt.replace('{flow_and_state_info}', StateMachine.getStateMachinePrompt(input['memory']))
+
+                # add state machine tool info to the system prompt
+                single_system_prompt = single_system_prompt.replace('{state_machine_tools}', StateMachine.getStateMachineTransitionCalls(input['memory']))
+
                 logger.info(f"single_system_prompt: {single_system_prompt}")
 
                 # create the messages format
