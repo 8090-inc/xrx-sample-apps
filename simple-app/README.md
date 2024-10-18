@@ -56,16 +56,10 @@ Create a `.env` file in the root directory of your project. Use the provided `en
 
 ### Using Docker
 
-1. Build the Docker image:
+1. Build & run the Docker images:
    ```bash
-   docker build -t simple-reasoning-agent:latest .
+   docker compose up --build
    ```
-
-2. Run the container:
-   ```bash
-   docker run -p 8003:8003 --env-file .env simple-reasoning-agent:latest
-   ```
-
 The agent will be accessible at `http://localhost:8003`.
 
 
