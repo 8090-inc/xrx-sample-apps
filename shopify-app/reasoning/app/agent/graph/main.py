@@ -2,7 +2,9 @@ import asyncio
 from .base import *
 from .nodes.routing import Routing
 from .nodes.choose_tool import ChooseTool
+from .nodes.transition_state import TransitionState
 from .nodes.customer_response import CustomerResponse
+from .nodes.state_machine_guardrails_check import StateMachineGuardrailsCheck
 from .nodes.convert_natural_language import ConvertNaturalLanguage
 from .nodes.identify_tool_params import IdentifyToolParams
 from .nodes.execute_tool import ExecuteTool
@@ -26,7 +28,7 @@ Parameters: {parameters}
 <awaiting next steps>
 '''
 
-async def agent_graph(messages, task_id='', action={}, memory=None):
+async def agent_graph(messages, task_id='', action={}, memory=None, state_machine=None):
 
     # define all nodes
     node_routing = Routing('Routing', {})
@@ -34,7 +36,9 @@ async def agent_graph(messages, task_id='', action={}, memory=None):
     node_convert_natural_language = ConvertNaturalLanguage('ConvertNaturalLanguage', {})
     node_identify_tool_params = IdentifyToolParams('IdentifyToolParams', {})
     node_execute_tool = ExecuteTool('ExecuteTool', {})
+    node_transition_state = TransitionState('TransitionState', {})
     node_customer_response = CustomerResponse('CustomerResponse', {})
+    node_state_machine_guardrails_check = StateMachineGuardrailsCheck('StateMachineGuardrailsCheck', {})
     node_widget = Widget('Widget', {})
     node_task_description = TaskDescriptionResponse('TaskDescriptionResponse', {})
 
@@ -43,9 +47,11 @@ async def agent_graph(messages, task_id='', action={}, memory=None):
     graph.add_node(node_routing)
     graph.add_node(node_choose_tool)
     graph.add_node(node_customer_response)
+    graph.add_node(node_state_machine_guardrails_check)
     graph.add_node(node_convert_natural_language)
     graph.add_node(node_identify_tool_params)
     graph.add_node(node_execute_tool)
+    graph.add_node(node_transition_state)
     graph.add_node(node_widget)
     graph.add_node(node_task_description)
 
@@ -72,6 +78,10 @@ async def agent_graph(messages, task_id='', action={}, memory=None):
         input_dict['tool'] = action['details']['tool']
         input_dict['parameters'] = action['details']['parameters']
     logger.info(f"Starting traversal at node: {starting_node}")
+
+    if not input_dict['memory']:
+        input_dict['memory'] = {}
+    input_dict['memory']['stateMachine'] = state_machine
 
     # start the graph traversal
     try:

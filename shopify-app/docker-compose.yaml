@@ -27,6 +27,8 @@ services:
 
   xrx-reasoning:
     container_name: xrx-reasoning
+    stdin_open: true
+    tty: true
     build:
       context: .
       dockerfile: reasoning/Dockerfile

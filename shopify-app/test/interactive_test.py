@@ -31,7 +31,32 @@ def send_messages(messages, user_input, session):
             data = json.loads(line[6:])
             print('- - - '*10)
             print(colored("Graph Agent Output:", 'yellow'))
-            rprint(data)
+
+            # DEBUG for state machine work; 
+            # TODO(mprast): perhaps add functionality to trim verbose session output?
+            if isinstance(data, str) or 'error' in data:
+                rprint(data)
+            else:
+                data_copy = data.copy()
+                session_copy = data_copy['session'].copy()
+                data_copy['session'] = session_copy
+
+                # get rid of session, get rid of messages, output at bottom, 
+                # different color
+
+                if 'session' in data_copy:
+                    if 'stateMachine' in data_copy['session']:
+                        del data_copy['session']
+                        del data_copy['messages']
+                        data_copy['__output'] = data_copy['output']
+                        del data_copy['output']
+                        
+                        if data_copy['node'] == 'StateMachineGuardrailsCheck' or data_copy['node'] == 'TaskDescriptionResponse':
+                            print(colored("Agent Response: " + data_copy['__output'], 'cyan'))
+
+                        #data_copy['session']['stateMachine'] = "<lengthy state machine info redacted>"
+
+                rprint(data_copy)
     if 'error' in data:
         print(colored("Error:", 'red'), data)
         return None, None, None

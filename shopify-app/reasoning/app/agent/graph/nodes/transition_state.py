@@ -17,16 +17,15 @@ LLM_CLIENT = initialize_async_llm_client()
 LLM_MODEL_ID = os.environ.get('LLM_MODEL_ID', '')
 
 SYSTEM_PROMPT = '''\
-You are an expert at deciding which tool to use to generate a response to the customer from the assistant. 
-If the tool output is already in the conversation, don't use the tool again.
-Keep track of previous tool calls and their results. If a tool call fails or produces unexpected results, do not repeat the same call without modification. Instead, analyze the error, report it to the user, and suggest an alternative action.
+You are an expert at deciding which state machine state or flow to transition to next, given the current state, the conversation history, and \
+the descriptions of the potential next states and flows. Only choose a state or flow if it appears in the list below. If you are transitioning \
+between states, the name of your transition should begin with 'state_transition_'. If you are transitioning between flows, the name of your \
+transition should begin with 'flow_transition_'.
+
 Maintain awareness of the full conversation history. Use this context to avoid repeating information or asking for details that have already been provided. Regularly summarize the current state of the order to ensure consistency.
 
-## Tools
-You have access to the following tools. Choose these tools only if the objective of the current state has not been met.
-
-{tools}
-
+## Potential Next States and Flows
+{state_machine_transitions}
 
 ## Historical Conversation
 
@@ -41,68 +40,52 @@ Here is the conversation so far:
 ## Output Format
 You must return a perfectly formatted JSON object which can be serialized with the following keys:
 - 'reason': a string explaining which tool is the correct tool for the situation.
-- 'tool': a string representing the tool to use.
+- 'tool': a string representing the transition to make. This should be strictly limitited to the transitions listed under 'Potential Next States and Flows'.
 
 The 'reason' string should follow a pattern like below:
-"The previous tool calls accomplished <diagnosis of previous tool calls here>. \
-My current objective as defined by the state of the state machine is <current objective>. \
-Has this objective been met? <true or false>. \
-Is the user's question related to the current objective? <true or false>. \
-Based on these previous actions, the correct tool to call is <tool or state machine tool name here>. \
-When I call this tool, I will use the following parameters: <description of tool parameter inputs here, or blank if state machine tool>"
+"My current objective as defined by the state of the state machine is <current objective>. \
+Has the objective of the current state been met? <true or false> \
+Does the user want to move to another flow? <true or false> \
+Based on the context of my conversation with the customer, \
+I am choosing to transition to <state or flow name here>. \"
 
 Only use the state of the state machine listed in Flow and State Information to derive your objective; do not infer it on your own.
 
-If it is clear that a tool should not be called in this situation, simply state why in the 'reason' key \
+If it is clear that a transition shoudl not be made in this situation, simply state why in the 'reason' key \
 and place a blank string "" in the 'tool' key.
 
 ## Rules
-- Never assume an id input if it is not provided in the context or previous tool calls.
-- Always use the exact values returned by the previous tools. Do not modify or create new values.
 - Provide all information in the JSON object. Any other text is strictly forbidden.
-- If you're unsure about any information, use the appropriate tool to verify rather than making assumptions.
-- Do not choose tools that will not move you directly towards the objective of the current state.
-'''.replace('{tools}', tools_desc)
-
-TOOL_CACHE_PROMPT = '''
-assistant:
-### Tools Used Before Responding to Customer
-
-{tool_output_cache}
 '''
 
-class ChooseTool(Node):
+
+class TransitionState(Node):
     def __init__(self, name, attributes):
         super().__init__(name, attributes)
         self.llm_client = LLM_CLIENT
         self.llm_model_id = LLM_MODEL_ID
 
-    @observability_decorator('ChooseTool')
+    @observability_decorator('TransitionState')
     async def process(self, messages: list, input: dict):
         try:
-            logger.info(f"ChooseTool processing messages: {messages}")
-            logger.info(f"ChooseTool processing input: {pformat(input, indent=2, width=100)}")
+            logger.info(f"TransitionState processing messages: {messages}")
+            logger.info(f"TransitionState processing input: {pformat(input, indent=2, width=100)}")
             
             # make a  copy of the system prompt
             single_system_prompt = SYSTEM_PROMPT
 
-            # retrieve all tool calls which have been made and make the string if there are any
-            tool_output_cache = input.get('memory', {}).get('tool-output-cache', [])
-
             # create the conversation variable
             conversation = ''.join([f"{i['role']}: {i['content']}\n" for i in messages])
+
+            # add the conversation to the system prompt
+            single_system_prompt = single_system_prompt.replace('{conversation}', conversation)
 
             # add the state machine prompt to the system prompt
             single_system_prompt = single_system_prompt.replace('{flow_and_state_info}', StateMachine.getStateMachinePrompt(input['memory']))
 
-            # add tool call cache to the conversation if it exists
-            if len(tool_output_cache) > 0:
-                tool_output_cache_str = ''.join([f"* {i['tool']}: {i['description']}\n" for i in tool_output_cache])
-                single_tool_cache_prompt = TOOL_CACHE_PROMPT.replace('{tool_output_cache}', tool_output_cache_str)
-                conversation += single_tool_cache_prompt
+            # add state machine tool info to the system prompt
+            single_system_prompt = single_system_prompt.replace('{state_machine_transitions}', StateMachine.getStateMachineTransitionCalls(input['memory']))
 
-            # add the conversation to the system prompt
-            single_system_prompt = single_system_prompt.replace('{conversation}', conversation)
 
             # create the messages format
             input_messages = [
@@ -117,7 +100,7 @@ class ChooseTool(Node):
             })
 
             # call the LLM
-            logger.debug(f"ChooseTool input messages:\n{pformat(input_messages, indent=2, width=100)}")
+            logger.debug(f"TransitionState input messages:\n{pformat(input_messages, indent=2, width=100)}")
             try:
                 response = await self.llm_client.chat.completions.create(
                     model=self.llm_model_id,
@@ -135,19 +118,20 @@ class ChooseTool(Node):
                     tool_output = await json_fixer(e.response.json()['error']['failed_generation'])
                 else:
                     raise e
-            logger.info(f"ChooseTool tool_output: {tool_output}")
+            logger.info(f"TransitionState tool_output: {tool_output}")
 
             # send the data back to the endpoint
             await asyncio.sleep(0) 
+
             yield {
                 'node': self.id,
                 'reason': tool_output['reason'],
                 'output': tool_output['tool'],
                 'memory': input.get('memory', {})
             }
-            logger.info("ChooseTool finished processing")
+            logger.info("TransitionState finished processing")
         except Exception as e:
-            logger.exception(f"An error occurred in ChooseTool")
+            logger.exception(f"An error occurred in TransitionState")
             raise e
 
     async def get_successors(self, result: dict):
@@ -155,14 +139,10 @@ class ChooseTool(Node):
         tool = result.get('output', '')
         reason = result.get('reason', '')
         
-        # format the tool if the model outputs a tool with parameters
-        if '(' in tool:
-            tool = tool.split('(')[0]
-
         if tool != "":
-            successors.append(("IdentifyToolParams", {
-                'tool': tool, 
-                'reason': reason,
+            successors.append(("ExecuteTool", {
+                'tool': tool,
+                'parameters': {},
                 'memory': result.get('memory', {})
             }))
         else:
