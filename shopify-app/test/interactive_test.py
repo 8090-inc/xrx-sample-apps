@@ -51,7 +51,7 @@ def send_messages(messages, user_input, session):
                         data_copy['__output'] = data_copy['output']
                         del data_copy['output']
                         
-                        if data_copy['node'] == 'CustomerResponse':
+                        if data_copy['node'] == 'StateMachineGuardrailsCheck' or data_copy['node'] == 'TaskDescriptionResponse':
                             print(colored("Agent Response: " + data_copy['__output'], 'cyan'))
 
                         #data_copy['session']['stateMachine'] = "<lengthy state machine info redacted>"

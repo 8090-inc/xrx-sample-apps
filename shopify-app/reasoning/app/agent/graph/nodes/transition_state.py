@@ -44,7 +44,9 @@ You must return a perfectly formatted JSON object which can be serialized with t
 
 The 'reason' string should follow a pattern like below:
 "My current objective as defined by the state of the state machine is <current objective>. \
-The objective of the current state has been met. Based on the context of my conversation with the customer, \
+Has the objective of the current state been met? <true or false> \
+Does the user want to move to another flow? <true or false> \
+Based on the context of my conversation with the customer, \
 I am choosing to transition to <state or flow name here>. \"
 
 Only use the state of the state machine listed in Flow and State Information to derive your objective; do not infer it on your own.
